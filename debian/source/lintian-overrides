@@ -1,0 +1,2 @@
+source-contains-unsafe-symlink
+package-needs-versioned-debhelper-build-depends

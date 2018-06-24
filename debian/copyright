@@ -1,0 +1,138 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+
+Files: *
+Copyright: 2009-2012, Tiger Soldier
+License: GPL-3+
+
+Files: INSTALL
+Copyright: 1994-1996, 1999-2002, 2004-2013, Free Software Foundation
+License: UNKNOWN
+ Please fill license UNKNOWN from header of INSTALL
+
+Files: lyricsources/*
+Copyright: 2009-2012, Tiger Soldier <tigersoldi@gmail.com>
+License: GPL-3+
+
+Files: lyricsources/viewlyrics/*
+Copyright: 2012, PedroHLC <pedro.laracampos@gmail.com>
+License: GPL-3+
+
+Files: python/lyricsource.py
+Copyright: 2009-2012, Tiger Soldier <tigersoldi@gmail.com>
+License: GPL-3+
+
+Files: src/*
+Copyright: 2009-2012, Tiger Soldier <tigersoldier@gmail.com>
+License: GPL-3+
+
+Files: src/gettext.h
+Copyright: 1995-1998, 2000-2002, 2004-2006, Free Software Foundation, Inc
+License: GPL-2+
+
+Files: src/ol_about.c
+  src/ol_app_chooser_widget.c
+  src/ol_app_chooser_widget.h
+  src/ol_cell_renderer_button.c
+  src/ol_color.c
+  src/ol_commands.c
+  src/ol_config_proxy.c
+  src/ol_config_updater.h
+  src/ol_debug.c
+  src/ol_display_module.c
+  src/ol_gui.c
+  src/ol_image_button.c
+  src/ol_keybindings.c
+  src/ol_lrc.c
+  src/ol_lyric_candidate_list.c
+  src/ol_main.c
+Copyright: 2009-2012, Tiger Soldier
+License: GPL-3+
+
+Files: src/ol_consts.h
+  src/ol_lyric_candidate_selector.c
+  src/ol_lyric_source_list.c
+  src/ol_menu.c
+  src/ol_metadata.c
+  src/ol_notify.c
+  src/ol_option.c
+  src/ol_osd_module.c
+  src/ol_osd_render.c
+  src/ol_osd_toolbar.c
+  src/ol_osd_window.c
+  src/ol_path_pattern.c
+  src/ol_player.c
+Copyright: 2009-2012, Tiger Soldier <tigersoldi@gmail.com>
+License: GPL-3+
+
+Files: src/ol_eggaccelerators.c
+Copyright: 2002, Red Hat, Inc.; 1998, 2001 Tim Janik
+License: LGPL-2+
+
+Files: src/ol_eggaccelerators.h
+Copyright: 2002, Red Hat, Inc
+License: LGPL-2+
+
+Files: src/ol_keybinder.c
+  src/ol_keybinder.h
+Copyright: 2004-2007, Alex Graveley
+License: LGPL-2+
+
+Files: src/ol_md5.c
+  src/ol_md5.h
+Copyright: 2001, Niels Möller
+License: LGPL-2.1+
+
+Files: src/ol_scroll_module.c
+  src/ol_scroll_window.c
+  src/ol_scroll_window.h
+Copyright: 2011, Tiger Soldier <tigersoldier@gmail.com>
+  2010, Sarlmol Apple <sarlmolapple@gmail.com>
+License: GPL-3+
+
+Files: src/ol_scroll_module.h
+Copyright: 2010, Sarlmol Apple <sarlmolapple@gmail.com>
+License: GPL-3+
+
+Files: src/tests/*
+Copyright: 2009-2012, Tiger Soldier <tigersoldi@gmail.com>
+License: GPL-3+
+
+Files: tools/*
+Copyright: 2009-2012, Tiger Soldier <tigersoldi@gmail.com>
+License: GPL-3+
+
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2 dated June, 1991, or (at
+ your option) any later version.
+ .
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in '/usr/share/common-licenses/GPL-2'.
+
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 3 dated June, 2007, or (at
+ your option) any later version.
+ .
+ On Debian systems, the complete text of version 3 of the GNU General
+ Public License can be found in '/usr/share/common-licenses/GPL-3'.
+
+License: LGPL-2+
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU Library General Public License as published by the
+ Free Software Foundation; version 2 of the License, or (at
+ your option) any later version.
+ .
+ On Debian systems, the complete text of version 2 of the GNU Library
+ General Public License can be found in `/usr/share/common-licenses/LGPL-2'.
+
+License: LGPL-2.1+
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU Lesser General Public License as published by the
+ Free Software Foundation; version 2.1 of the License, or (at
+ your option) any later version.
+ .
+ On Debian systems, the complete text of version 2.1 of the GNU Lesser
+ General Public License can be found in `/usr/share/common-licenses/LGPL-2.1'.

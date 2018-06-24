@@ -1,0 +1,44 @@
+Source: osdlyrics
+Section: x11
+Priority: optional
+Maintainer: mail6543210 <mail6543210l@yahoo.com.tw>
+Homepage: https://github.com/osdlyrics/osdlyrics
+Standards-Version: 3.9.5
+Vcs-Git: https://github.com/osdlyrics/osdlyrics.git
+Build-Depends:
+ debhelper,
+# no dh-autoreconf (debhelper>=9.20160402)
+ dh-autoreconf,
+ intltool,
+ libgtk2.0-dev,
+ libdbus-glib-1-dev,
+ libnotify-dev,
+ python, python3,
+# optional:
+ libappindicator-dev,
+# not sure:
+# hicolor-icon-theme
+# desktop-file-utils
+
+Package: osdlyrics
+Architecture: any
+Depends:
+# python-dbus,
+# python-gi (>= 3.11.1),
+# python-chardet,
+# python-pycurl,
+# python-configparser,
+ ${python:Depends},
+ ${shlibs:Depends},
+ ${misc:Depends}
+Suggests:
+ python-mpd (>= 0.3),
+ python-gi,
+ python-kde4
+Description: Show lyrics with your favorite media player.
+ OSD Lyrics is a lyrics show compatible with various media players.
+ It is not a plugin but a standalone program.
+ OSD Lyrics shows lyrics on your desktop, in the style similar to KaraOK.
+ It also provides another displaying style,
+ in which lyrics scroll from bottom to top.
+ OSD Lyrics can download lyrics from the network automatically.
