@@ -16,6 +16,7 @@ To use OSD Lyrics, just launch your media player, then launch OSD Lyrics. OSD Ly
 The following packages need to be installed to compile osdlyrics:
 - `libappindicator-dev`
 - `libdbus-glib-1-dev`
+- `python-gi (>= 3.7.2)`
 
 
 ## Troubleshooting

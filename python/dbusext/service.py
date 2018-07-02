@@ -25,7 +25,7 @@ import sys
 import dbus
 import dbus.exceptions
 import dbus.service
-import glib
+from gi.repository import GLib
 
 from .property import Property
 
@@ -118,7 +118,7 @@ class Object(ObjectType):
         """
         self._changed_props[prop_name] = emit_with_value
         if not self._prop_change_timer:
-            self._prop_change_timer = glib.idle_add(self._prop_changed_timeout_cb)
+            self._prop_change_timer = GLib.idle_add(self._prop_changed_timeout_cb)
 
     @dbus.service.method(dbus_interface=dbus.PROPERTIES_IFACE,
                          in_signature='ss',
@@ -423,14 +423,14 @@ def test():
         def __init__(self, loop):
             TestObj.__init__(self, loop)
 
-    import glib
+    from gi.repository import GLib
     from dbus.mainloop.glib import DBusGMainLoop
-    loop = glib.MainLoop()
+    loop = GLib.MainLoop()
     dbus_mainloop = DBusGMainLoop()
     conn = dbus.SessionBus(mainloop=dbus_mainloop)
     bus_name = dbus.service.BusName(BUS_NAME, conn)
     testobj = TestObjSub(loop)
-    glib.timeout_add(100, test_timeout)
+    GLib.timeout_add(100, test_timeout)
     loop.run()
 
 if __name__ == '__main__':

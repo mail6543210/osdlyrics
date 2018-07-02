@@ -161,9 +161,9 @@ def test():
         logging.debug('%s has been changed to %s' % (name,
                                                      getattr(config, 'get_' + typename)(name)))
 
-    import glib
+    from gi.repository import GLib
     from dbus.mainloop.glib import DBusGMainLoop
-    loop = glib.MainLoop()
+    loop = GLib.MainLoop()
     dbus_mainloop = DBusGMainLoop()
     conn = dbus.SessionBus(mainloop=dbus_mainloop)
     config = Config(conn)

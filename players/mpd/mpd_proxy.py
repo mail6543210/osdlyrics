@@ -28,8 +28,8 @@ import select
 
 import dbus
 import dbus.service
-import glib
-import gobject
+from gi.repository import GLib
+from gi.repository import GObject
 try:
     import mpd
 except ImportError:
@@ -127,8 +127,8 @@ class MpdProxy(BasePlayerProxy):
         except mpd.MPDError as e:
             logging.info("Could not connect to '%s': %s", self._host, e)
             return False
-        self._io_watch = gobject.io_add_watch(self._client,
-                                              glib.IO_IN,
+        self._io_watch = GObject.io_add_watch(self._client,
+                                              GLib.IOCondition.IN,
                                               self._on_data)
         return True
 
@@ -184,7 +184,7 @@ class MpdProxy(BasePlayerProxy):
 
     def _on_disconnect(self):
         if self._io_watch:
-            glib.remove_source(self._io_watch)
+            GLib.remove_source(self._io_watch)
             self._io_watch = None
             self._client.disconnect()
             self._player.disconnect()
@@ -218,7 +218,7 @@ class MpdProxy(BasePlayerProxy):
                 or (len(self._fetch_queue) == 1
                     and self._fetch_queue[0].command != Cmds.IDLE):
             select.select((self._client,), (), ())
-            self._on_data(self._client, glib.IO_IN)
+            self._on_data(self._client, GLib.IOCondition.IN)
 
     def _enqueue_callback(self, command, callback):
         self._fetch_queue.append(CommandCallback(command, callback))

@@ -21,7 +21,7 @@
 import logging
 
 import dbus.service
-import glib
+from gi.repository import GLib
 
 import osdlyrics
 from osdlyrics.app import App
@@ -61,7 +61,7 @@ class PlayerSupport(dbus.service.Object):
         self._mpris2_player = Mpris2Player(conn)
 
     def _start_detect_player(self):
-        self._detect_timer = glib.timeout_add(self.DETECT_PLAYER_TIMEOUT,
+        self._detect_timer = GLib.timeout_add(self.DETECT_PLAYER_TIMEOUT,
                                               lambda : not self._detect_player())
 
     def _detect_player(self):
@@ -84,7 +84,7 @@ class PlayerSupport(dbus.service.Object):
             except:
                 pass
         if detected and self._detect_timer:
-            glib.source_remove(self._detect_timer)
+            GLib.source_remove(self._detect_timer)
             self._detect_timer = None
         return detected
 

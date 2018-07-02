@@ -22,7 +22,7 @@ import datetime
 import logging
 import time
 
-import glib
+from gi.repository import GLib
 
 from osdlyrics.metadata import Metadata
 from osdlyrics.player_proxy import (BasePlayer, BasePlayerProxy, PlayerInfo,
@@ -39,11 +39,11 @@ class HttpPlayerProxy(BasePlayerProxy):
         super(HttpPlayerProxy, self).__init__('Http')
         self._server = server.HttpServer(('', 7119),
                                          self)
-        self._server_watch = glib.io_add_watch(self._server.fileno(),
-                                               glib.IO_IN,
+        self._server_watch = GLib.io_add_watch(self._server.fileno(),
+                                               GLib.IOCondition.IN,
                                                self._handle_req)
         self._players = {}
-        self._connection_timer = glib.timeout_add(CONNECTION_TIMEOUT,
+        self._connection_timer = GLib.timeout_add(CONNECTION_TIMEOUT,
                                                   self._check_connection)
         self._player_counter = 1
 
