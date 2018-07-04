@@ -25,14 +25,13 @@ import dbus.mainloop.glib
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 from gi.repository import GLib
-from gi.repository import GObject
 
 from .consts import DAEMON_BUS_NAME
 
 APP_BUS_PREFIX = 'org.osdlyrics.'
 
 
-GObject.threads_init()
+GLib.threads_init()
 dbus.mainloop.glib.threads_init()
 
 class AlreadyRunningException(Exception):

@@ -29,7 +29,6 @@ import select
 import dbus
 import dbus.service
 from gi.repository import GLib
-from gi.repository import GObject
 try:
     import mpd
 except ImportError:
@@ -127,9 +126,9 @@ class MpdProxy(BasePlayerProxy):
         except mpd.MPDError as e:
             logging.info("Could not connect to '%s': %s", self._host, e)
             return False
-        self._io_watch = GObject.io_add_watch(self._client,
-                                              GLib.IOCondition.IN,
-                                              self._on_data)
+        self._io_watch = GLib.io_add_watch(self._client,
+                                           GLib.IOCondition.IN,
+                                           self._on_data)
         return True
 
     def do_list_active_players(self):
