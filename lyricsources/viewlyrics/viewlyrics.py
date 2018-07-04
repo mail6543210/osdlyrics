@@ -57,9 +57,9 @@ class ViewlyricsSource(BaseLyricSourcePlugin):
     def do_search(self, metadata):
         # type: (osdlyrics.metadata.Metadata) -> List[SearchResult]
         if metadata.title:
-            title =  metadata.title
+            title = metadata.title
         else:
-            title =  ''
+            title = ''
         if metadata.artist:
             artist = metadata.artist
         else:
@@ -89,8 +89,8 @@ class ViewlyricsSource(BaseLyricSourcePlugin):
 
     def real_search(self, title='', artist='', page=0):
         query = VIEWLYRICS_QUERY_FORM
-        query =  query.replace('%title', title)
-        query =  query.replace('%artist', artist)
+        query = query.replace('%title', title)
+        query = query.replace('%artist', artist)
         query = query.replace('%etc', ' client="MiniLyrics" RequestPage=\'%d\'' % page)  # Needs real RequestPage
         query = query.encode('utf-8')
 

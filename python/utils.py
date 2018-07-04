@@ -214,7 +214,7 @@ def get_gsettings_proxy():
     settings = Gio.Settings('org.gnome.system.proxy')
     if settings.get_string('mode') != 'manual':
         return ProxySettings(protocol='no')
-    protocol_map = { 'http': 'http', 'socks5': 'socks' }
+    protocol_map = {'http': 'http', 'socks5': 'socks'}
     for protocol, key in protocol_map.items():
         settings = Gio.Settings('org.gnome.system.proxy.' + key)
         host = settings.get_string('host').strip()
@@ -313,7 +313,7 @@ def http_download(url, port=0, method='GET', params={}, headers={}, timeout=15, 
     elif method == 'POST':
         c.setopt(pycurl.POST, 1)
         if params:
-            c.setopt(pycurl.POSTFIELDS, params) #Someone had forgot an 'S'
+            c.setopt(pycurl.POSTFIELDS, params)  # Someone had forgot an 'S'
             c.setopt(pycurl.POSTFIELDSIZE, len(params))
     c.setopt(pycurl.URL, url)
     if 0 < port < 65536:
