@@ -37,11 +37,13 @@ class MalformedKeyError(osdlyrics.errors.BaseError):
     def __init__(self, *args):
         super(MalformedKeyError, self).__init__(*args)
 
+
 class ValueNotExistError(osdlyrics.errors.BaseError):
     def __init__(self, key=''):
         super(ValueNotExistError, self).__init__(
             'Value of key %s does not exist' % key
             )
+
 
 class IniConfig(dbus.service.Object):
     """ Implement org.osdlyrics.Config
@@ -203,6 +205,7 @@ class IniConfig(dbus.service.Object):
     def ValueChanged(self, changed):
         pass
 
+
 def split(value, sep=';'):
     r"""
     >>> split('')
@@ -245,6 +248,7 @@ def split(value, sep=';'):
         curr = curr + 1
     return ret
 
+
 def join(values, sep=';'):
     r"""
     >>> join([])
@@ -267,9 +271,11 @@ def join(values, sep=';'):
         result.append(item.replace('\\', '\\\\').replace(sep, '\\;'))
     return sep.join(result) + sep
 
+
 def test():
     import doctest
     doctest.testmod()
+
 
 def run():
     app = App('Config')
@@ -278,6 +284,7 @@ def run():
     else:
         ini_conf = IniConfig(app.connection)
     app.run()
+
 
 if __name__ == '__main__':
     import sys
