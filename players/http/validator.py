@@ -29,7 +29,7 @@ __all__ = (
     'param_enum',
     'param_set',
     'validate_params',
-    )
+)
 
 
 class baseparam(object):

@@ -49,18 +49,18 @@ DEFAULT_FILE_PATTERNS = [
     '%t-%p',
     '%f',
     '%t',
-    ]
+]
 
 DEFAULT_PATH_PATTERNS = [
     '~/.lyrics',
     '%',
-    ]
+]
 
 SUPPORTED_SCHEMES = [
     'file',
-#    'tag',
+    # 'tag',
     'none',
-    ]
+]
 
 DETECT_CHARSET_GUESS_MIN_LEN = 40
 DETECT_CHARSET_GUESS_MAX_LEN = 100
@@ -197,7 +197,7 @@ def load_from_uri(uri):
     URI_LOAD_HANDLERS = {
         'file': load_from_file,
         'none': lambda uri: '',
-        }
+    }
 
     url_parts = urllib.parse.urlparse(uri)
     content = URI_LOAD_HANDLERS[url_parts.scheme](url_parts)
@@ -249,7 +249,7 @@ def save_to_uri(uri, content, create=True):
     URI_SAVE_HANDLERS = {
         'file': save_to_file,
         'none': lambda urlparts, content, create: True,
-        }
+    }
 
     url_parts = urllib.parse.urlparse(uri)
     return URI_SAVE_HANDLERS[url_parts.scheme](url_parts, content, create)
