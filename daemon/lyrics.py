@@ -18,10 +18,8 @@
 # along with OSD Lyrics.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import division
 from future import standard_library
 standard_library.install_aliases()
-from past.utils import old_div
 import logging
 import os
 import os.path
@@ -101,7 +99,7 @@ def metadata_description(metadata):
 if sys.version_info >= (3, 0):
     UNICODE_TYPE = str
 else:
-    UNICODE_TYPE = str
+    UNICODE_TYPE = unicode
 
 
 def decode_by_charset(content):
@@ -122,7 +120,7 @@ def decode_by_charset(content):
     # half of the content of it and try again.
     if not encoding and len(content) > DETECT_CHARSET_GUESS_MIN_LEN:
         content_len = len(content)
-        content_half = old_div(content_len, 2)
+        content_half = content_len // 2
         if content_half <= DETECT_CHARSET_GUESS_MAX_LEN and \
                 content_half >= DETECT_CHARSET_GUESS_MIN_LEN:
             slice_end = content_half

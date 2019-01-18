@@ -18,8 +18,6 @@
 # along with OSD Lyrics.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import division
-from past.utils import old_div
 from builtins import object
 import logging
 
@@ -371,7 +369,7 @@ class BasePlayer(DBusObject):
         """
         raise NotImplementedError()
 
-    def __next__(self):
+    def next(self):
         """
         Play the next track.
         """
@@ -472,7 +470,7 @@ class BasePlayer(DBusObject):
                          in_signature='',
                          out_signature='')
     def Next(self):
-        next(self)
+        self.next()
 
     @dbus.service.method(dbus_interface=MPRIS2_PLAYER_INTERFACE,
                          in_signature='',
@@ -503,7 +501,7 @@ class BasePlayer(DBusObject):
                          out_signature='')
     def Seek(self, offset):
         pos = self._get_cached_position()
-        pos += old_div(offset, 1000)
+        pos += offset // 1000
         if pos < 0:
             pos = 0
         self.set_position(pos)
@@ -514,7 +512,7 @@ class BasePlayer(DBusObject):
     def SetPosition(self, trackid, position):
         if trackid != self._get_current_trackid():
             return
-        self.set_position(old_div(position, 1000))
+        self.set_position(position // 1000)
 
     @dbus.service.method(dbus_interface=MPRIS2_PLAYER_INTERFACE,
                          in_signature='',
@@ -737,7 +735,7 @@ class BasePlayer(DBusObject):
                 CAPS_PAUSE: 'CanPause',
                 CAPS_SEEK: 'CanSeek',
                 }
-            for cap, method in list(caps_map.items()):
+            for cap, method in caps_map.items():
                 if cap in orig_caps != cap in self._caps:
                     setattr(self, method, cap in self._caps)
 

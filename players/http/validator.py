@@ -100,14 +100,14 @@ def validate_params(param_def):
     def dec(func):
         def dec_func(handler, params, *args, **kargs):
             valid_params = {}
-            for k, v in list(params.items()):
+            for k, v in params.items():
                 if k in param_def:
                     valid, value = param_def[k].validate(v)
                     if not valid:
                         raise BadRequestError('query "%s=%s" is invalid' % (k, v))
                     v = value
                 valid_params[k] = v
-            for k, v in list(param_def.items()):
+            for k, v in param_def.items():
                 if not v.optional and not k in params:
                     raise BadRequestError('missing "%s" in query' % k)
             return func(handler, valid_params, *args, **kargs)
