@@ -405,7 +405,7 @@ class LyricsService(dbus.service.Object):
         for path_pat in path_patterns:
             try:
                 path = expand_path(path_pat, metadata)
-            except:
+            except Exception:
                 continue
             for file_pat in file_patterns:
                 try:
@@ -426,7 +426,7 @@ class LyricsService(dbus.service.Object):
         for path_pat in path_patterns:
             try:
                 path = expand_path(path_pat, metadata)
-            except:
+            except Exception:
                 continue
             for file_pat in file_patterns:
                 try:
@@ -450,7 +450,7 @@ def doc_test():
 
 def test():
     app = App('Lyrics', False)
-    lyrics_service = LyricsService(app.connection)
+    lyrics_service = LyricsService(app.connection)  # noqa: F841
     app.run()
 
 

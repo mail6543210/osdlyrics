@@ -84,7 +84,7 @@ class IniConfig(dbus.service.Object):
         section, name = self._split_key(key)
         try:
             return self._confparser.getboolean(section, name)
-        except:
+        except Exception:
             raise ValueNotExistError(key)
 
     @dbus.service.method(dbus_interface=CONFIG_BUS_NAME,
@@ -94,7 +94,7 @@ class IniConfig(dbus.service.Object):
         section, name = self._split_key(key)
         try:
             return self._confparser.getint(section, name)
-        except:
+        except Exception:
             raise ValueNotExistError(key)
 
     @dbus.service.method(dbus_interface=CONFIG_BUS_NAME,
@@ -104,7 +104,7 @@ class IniConfig(dbus.service.Object):
         section, name = self._split_key(key)
         try:
             return self._confparser.getfloat(section, name)
-        except:
+        except Exception:
             raise ValueNotExistError(key)
 
     @dbus.service.method(dbus_interface=CONFIG_BUS_NAME,
@@ -114,7 +114,7 @@ class IniConfig(dbus.service.Object):
         section, name = self._split_key(key)
         try:
             return self._confparser.get(section, name)
-        except:
+        except Exception:
             raise ValueNotExistError(key)
 
     @dbus.service.method(dbus_interface=CONFIG_BUS_NAME,
@@ -124,7 +124,7 @@ class IniConfig(dbus.service.Object):
         value = self.GetString(key)
         try:
             return split(value)
-        except:
+        except Exception:
             raise ValueNotExistError(key)
 
     def _set_value(self, key, value, overwrite=True):
@@ -282,7 +282,7 @@ def run():
     if len(sys.argv) > 1:
         ini_conf = IniConfig(app.connection, sys.argv[1])
     else:
-        ini_conf = IniConfig(app.connection)
+        ini_conf = IniConfig(app.connection)  # noqa: F841
     app.run()
 
 
