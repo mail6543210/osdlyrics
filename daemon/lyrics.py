@@ -18,11 +18,15 @@
 # along with OSD Lyrics.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import division
+from future import standard_library
+standard_library.install_aliases()
+from past.utils import old_div
 import logging
 import os
 import os.path
 import re
-import urlparse
+import urllib.parse
 import sys
 
 import dbus
@@ -97,7 +101,7 @@ def metadata_description(metadata):
 if sys.version_info >= (3, 0):
     UNICODE_TYPE = str
 else:
-    UNICODE_TYPE = unicode
+    UNICODE_TYPE = str
 
 
 def decode_by_charset(content):
@@ -118,7 +122,7 @@ def decode_by_charset(content):
     # half of the content of it and try again.
     if not encoding and len(content) > DETECT_CHARSET_GUESS_MIN_LEN:
         content_len = len(content)
-        content_half = content_len / 2
+        content_half = old_div(content_len, 2)
         if content_half <= DETECT_CHARSET_GUESS_MAX_LEN and \
                 content_half >= DETECT_CHARSET_GUESS_MIN_LEN:
             slice_end = content_half
@@ -179,7 +183,7 @@ def ensure_uri_scheme(uri):
     If the uri doesn't have any scheme, it is considered to be a file path.
     """
     if uri:
-        url_parts = urlparse.urlparse(uri)
+        url_parts = urllib.parse.urlparse(uri)
         if not url_parts.scheme:
             uri = osdlyrics.utils.path2uri(uri)
     return uri
@@ -213,7 +217,7 @@ def load_from_uri(uri):
         'none': lambda uri: '',
         }
 
-    url_parts = urlparse.urlparse(osdlyrics.utils.ensure_utf8(uri))
+    url_parts = urllib.parse.urlparse(osdlyrics.utils.ensure_utf8(uri))
     content = URI_LOAD_HANDLERS[url_parts.scheme](url_parts)
     if content is None:
         return None
@@ -238,7 +242,7 @@ def save_to_file(urlparts, content, create):
         dirname = os.path.dirname(path)
         if not os.path.isdir(dirname):
             try:
-                os.makedirs(os.path.dirname(path), 0755)
+                os.makedirs(os.path.dirname(path), 0o755)
             except OSError as e:
                 logging.warning("Cannot create directories for %s: %s", path, e)
                 return False
@@ -261,7 +265,7 @@ def save_to_uri(uri, content, create=True):
         'none': lambda urlparts, content, create: True,
         }
 
-    url_parts = urlparse.urlparse(osdlyrics.utils.ensure_utf8(uri))
+    url_parts = urllib.parse.urlparse(osdlyrics.utils.ensure_utf8(uri))
     return URI_SAVE_HANDLERS[url_parts.scheme](url_parts, content, create)
 
 def update_lrc_offset(content, offset):
