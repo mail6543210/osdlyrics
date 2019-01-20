@@ -195,7 +195,7 @@ def load_from_file(urlparts):
     else:
         path = urlparts.path
     try:
-        lrcfile = open(path)
+        lrcfile = open(path, 'rb')
     except IOError as e:
         logging.info("Cannot open file %s to read: %s" % (path, e))
         return None
@@ -243,7 +243,7 @@ def save_to_file(urlparts, content, create):
                 logging.warning("Cannot create directories for %s: %s", path, e)
                 return False
     try:
-        file = open(path, 'w')
+        file = open(path, 'wb')
     except IOError as e:
         logging.info("Cannot open file %s to write: %s", path, e)
         return False
@@ -399,7 +399,7 @@ class LyricsService(dbus.service.Object):
         content = load_from_uri(uri)
         if content is None:
             raise CannotLoadLrcException(uri)
-        content = update_lrc_offset(content, offset_ms)
+        content = update_lrc_offset(content, offset_ms).encode('utf-8')
         if not save_to_uri(uri, content, True):
             raise CannotSaveLrcException(uri)
 
