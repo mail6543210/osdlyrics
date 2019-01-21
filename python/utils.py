@@ -18,6 +18,7 @@
 # along with OSD Lyrics.  If not, see <https://www.gnu.org/licenses/>.
 #
 from __future__ import unicode_literals
+from __future__ import print_function
 from future import standard_library
 standard_library.install_aliases()
 from builtins import object, str
@@ -41,6 +42,40 @@ __all__ = (
 )
 
 pycurl.global_init(pycurl.GLOBAL_DEFAULT)
+
+
+__coll = {}
+
+
+def pp(s, stacks=None):
+    import traceback
+    sid, oldv = None, None
+    if stacks is None:
+        stacks = traceback.extract_stack()[:-1]
+    elif isinstance(stacks, int):
+        if stacks > 0:
+            print('pushed', hex(stacks), file=sys.stderr)
+            __coll[stacks] = s, traceback.extract_stack()[:-1]
+            return
+        sid = -stacks
+        oldv, stacks = __coll[-stacks]
+    else:
+        assert isinstance(stacks, list)
+    print(s, type(s), (hex(sid), oldv), file=sys.stderr)
+    for fn, ln, func, line in reversed(stacks):
+        if func in ('main', 'run'):
+            break
+        print(u'%s:%d:%s:%s' % (
+            fn
+            .replace('/usr/lib/x86_64-linux-gnu/osdlyrics/', '')
+            .replace('/usr/lib/python2.7/dist-packages/osdlyrics/', 'python/')
+            .replace('/usr/lib/python3/dist-packages/osdlyrics/', 'python/'),
+            ln,
+            func,
+            line
+        ), file=sys.stderr)
+    print('', file=sys.stderr)
+
 
 if sys.version_info < (3, 0):
     # make sure the default encoding is utf-8
