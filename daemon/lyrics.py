@@ -20,12 +20,12 @@
 
 from future import standard_library
 standard_library.install_aliases()
+from builtins import str
 import logging
 import os
 import os.path
 import re
 import urllib.parse
-import sys
 
 import dbus
 import dbus.service
@@ -95,23 +95,18 @@ def metadata_description(metadata):
         return '[Unknown]'
 
 
-# TODO: remove once we have fully migrated to Python 3
-if sys.version_info >= (3, 0):
-    UNICODE_TYPE = str
-else:
-    UNICODE_TYPE = unicode
-
-
 def decode_by_charset(content):
     r"""
     Detect the charset encoding of a string and decodes to unicode strings.
 
+    >>> decode_by_charset(u'\u4e2d\u6587')
+    u'\u4e2d\u6587'
     >>> decode_by_charset(u'\u4e2d\u6587'.encode('UTF-8'))
     u'\u4e2d\u6587'
     >>> decode_by_charset(u'\u4e2d\u6587'.encode('HZ-GB-2312'))
     u'\u4e2d\u6587'
     """
-    if isinstance(content, UNICODE_TYPE):
+    if isinstance(content, str):
         return content
     encoding = chardet.detect(content)['encoding']
     # Sometimes, the content is well encoded but the last few bytes. This is
