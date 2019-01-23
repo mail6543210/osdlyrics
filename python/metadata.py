@@ -18,11 +18,14 @@
 # along with OSD Lyrics.  If not, see <https://www.gnu.org/licenses/>.
 #
 from __future__ import unicode_literals
-from builtins import object
+from builtins import object, str
 
 import logging
 logger = logging.getLogger(__file__)
 import re
+import sys
+if sys.version_info[0] > 2:
+    long = int
 
 import dbus
 
@@ -92,6 +95,77 @@ class Metadata(object):
         self.location = location
         self.length = length
         self._extra = extra
+
+    def is_default(self):
+        v = self.Atitle, self.Aartist, self.Aalbum, self.Aarturl, self.Atracknum, self.Alocation, self.Alength, self.A_extra
+        d = None, None, None, None, -1, None, -1, {}
+        return v[:-1] == d[:-1]
+
+    @property
+    def title(self):
+        assert isinstance(self.Atitle, str) or self.Atitle is None
+        return self.Atitle
+    @title.setter
+    def title(self, v):
+        assert v is None or isinstance(v, str), type(v)
+        self.Atitle = v
+    @property
+    def artist(self):
+        assert isinstance(self.Aartist, str) or self.Aartist is None
+        return self.Aartist
+    @artist.setter
+    def artist(self, v):
+        assert v is None or isinstance(v, str), type(v)
+        self.Aartist = v
+    @property
+    def album(self):
+        assert isinstance(self.Aalbum, str) or self.Aalbum is None
+        return self.Aalbum
+    @album.setter
+    def album(self, v):
+        assert v is None or isinstance(v, str), type(v)
+        self.Aalbum = v
+    @property
+    def arturl(self):
+        assert isinstance(self.Aarturl, str) or self.Aarturl is None
+        return self.Aarturl
+    @arturl.setter
+    def arturl(self, v):
+        assert v is None or isinstance(v, str), type(v)
+        self.Aarturl = v
+    @property
+    def tracknum(self):
+        assert isinstance(self.Atracknum, (dbus.UInt32, int)) or self.Atracknum is None
+        return self.Atracknum
+    @tracknum.setter
+    def tracknum(self, v):
+        assert v is None or isinstance(v, (dbus.UInt32, int)), type(v)
+        self.Atracknum = v
+    @property
+    def location(self):
+        assert isinstance(self.Alocation, str) or self.Alocation is None
+        return self.Alocation
+    @location.setter
+    def location(self, v):
+        assert v is None or isinstance(v, str), type(v)
+        assert v is None or ('://' in v and v.index('://') > 0)
+        self.Alocation = v
+    @property
+    def length(self):
+        assert isinstance(self.Alength, (dbus.UInt32, int, long)) or self.Alength is None
+        return self.Alength
+    @length.setter
+    def length(self, v):
+        assert v is None or isinstance(v, (dbus.UInt32, int, long)), type(v)
+        self.Alength = v
+    @property
+    def _extra(self):
+        assert isinstance(self.A_extra, dict) or self.A_extra is None
+        return self.A_extra
+    @_extra.setter
+    def _extra(self, v):
+        assert v is None or isinstance(v, dict), type(v)
+        self.A_extra = v
 
     def __eq__(self, other):
         """
@@ -332,7 +406,7 @@ class Metadata(object):
 
     def __str__(self):
         attrs = ['title', 'artist', 'album', 'location', 'length']
-        attr_value = ['  %s: %s' % (key, getattr(self, key)) for key in attrs]
+        attr_value = ['  %s: %s' % (key, getattr(self, 'A' + key)) for key in attrs]
         return 'metadata:\n' + '\n'.join(attr_value)
 
 
