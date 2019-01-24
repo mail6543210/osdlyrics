@@ -1,3 +1,3 @@
 [D-BUS Service]
 Name=org.osdlyrics.LyricSourcePlugin.lrc123
-Exec=@PYTHON@ @pkgdatadir@/lyricsources/lrc123/lrc123.py
+Exec=/bin/sh -c 'COVERAGE_FILE=/dev/shm/cov/l123 /usr/local/bin/coverage run -a --rcfile=/vagrant/cov @pkgdatadir@/lyricsources/lrc123/lrc123.py >> /dev/shm/n1 2>> /dev/shm/n2'
