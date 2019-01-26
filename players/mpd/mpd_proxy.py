@@ -25,6 +25,7 @@ from builtins import object
 import logging
 import os
 import select
+import sys
 
 import dbus
 import dbus.service
@@ -32,8 +33,10 @@ import glib
 import gobject
 try:
     import mpd
-except ImportError:
-    mpd = None
+    assert hasattr(mpd.MPDClient(), 'send_idle')
+except (ImportError, AssertionError):
+    logging.error('python-mpd >= 0.3 is required.')
+    sys.exit(1)
 
 from osdlyrics.consts import PLAYER_PROXY_INTERFACE
 from osdlyrics.metadata import Metadata
@@ -43,10 +46,6 @@ from osdlyrics.player_proxy import (
     STATUS_PLAYING, STATUS_STOPPED)
 from osdlyrics.timer import Timer
 from osdlyrics.utils import cmd_exists
-
-if mpd is None or not hasattr(mpd.MPDClient(), 'send_idle'):
-    logging.error('python-mpd >= 0.3 is required.')
-    exit(1)
 
 PLAYER_NAME = 'Mpd'
 DEFAULT_HOST = 'localhost'
@@ -313,7 +312,7 @@ class MpdPlayer(BasePlayer):
         """ Send a cmd. Can use sync=[True|False] to send in a blocking or
         non-blocking way. Default is non-blocking
         """
-        sync = False if 'sync' not in kwargs else kwargs['sync']
+        sync = kwargs.get('sync', False)
         if cmd not in self.CMD_HANDLERS:
             raise RuntimeError('Unknown command: %s', cmd)
         handler = self.CMD_HANDLERS[cmd]
