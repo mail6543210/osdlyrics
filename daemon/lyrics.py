@@ -100,11 +100,11 @@ def decode_by_charset(content):
     Detect the charset encoding of a string and decodes to unicode strings.
 
     >>> decode_by_charset(u'\u4e2d\u6587')
-    u'\u4e2d\u6587'
+    '\u4e2d\u6587'
     >>> decode_by_charset(u'\u4e2d\u6587'.encode('UTF-8'))
-    u'\u4e2d\u6587'
+    '\u4e2d\u6587'
     >>> decode_by_charset(u'\u4e2d\u6587'.encode('HZ-GB-2312'))
-    u'\u4e2d\u6587'
+    '\u4e2d\u6587'
     """
     if isinstance(content, str):
         return content
