@@ -37,6 +37,15 @@ try:
 except (ImportError, AssertionError):
     logging.error('python-mpd >= 0.3 is required.')
     sys.exit(1)
+else:
+    if not hasattr(mpd.MPDClient, 'add_command'):
+        PYMPD_VERSION = (0, 3, 0)
+    else:
+        try:
+            mpd.MPDClient(True)
+            PYMPD_VERSION = (0, 4, 2)
+        except TypeError:
+            PYMPD_VERSION = (0, 4, 0)
 
 from osdlyrics.consts import PLAYER_PROXY_INTERFACE
 from osdlyrics.metadata import Metadata
@@ -169,6 +178,11 @@ class MpdProxy(BasePlayerProxy):
                     continue
                 logging.debug('client pending: %s', self._client._pending)
                 retval = getattr(self._client, 'fetch_' + cmd_item.command)()
+                if isinstance(retval, dict):
+                    if sys.version_info[0] >= 3 or (0, 4, 0) <= PYMPD_VERSION < (0, 4, 2):
+                        retval = {k: v.encode('latin1').decode('utf8') if isinstance(v, str) else v for k, v in retval.items()}
+                    else:
+                        retval = {k: v.decode('utf8').encode('latin1').decode('utf8') if isinstance(v, bytes) else v for k, v in retval.items()}
                 cmd_item.call(retval)
             except Exception as e:
                 logging.exception(e)
