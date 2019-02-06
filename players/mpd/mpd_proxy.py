@@ -25,6 +25,7 @@ import __builtin__
 import logging
 import os
 import select
+import sys
 
 import dbus
 import dbus.service
@@ -167,6 +168,9 @@ class MpdProxy(BasePlayerProxy):
                     continue
                 logging.debug('client pending: %s', self._client._pending)
                 retval = getattr(self._client, 'fetch_' + cmd_item.command)()
+                if sys.version_info[0] == 2:
+                    if isinstance(retval, dict):
+                        retval = {k: v.decode('utf8').encode('latin1').decode('utf8') if isinstance(v, bytes) else v for k, v in retval.items()}
                 cmd_item.call(retval)
             except Exception as e:
                logging.exception(e)
