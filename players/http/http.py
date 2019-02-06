@@ -97,7 +97,7 @@ class HttpPlayer(BasePlayer):
         super(HttpPlayer, self).__init__(proxy, name)
         self._status = STATUS_STOPPED
         self._caps = caps
-        self._metadata = Metadata()
+        self.__metadata = Metadata()
         self._last_ping = datetime.datetime.now()
         self._timer = osdlyrics.timer.Timer()
         self._cmds = []
@@ -118,7 +118,7 @@ class HttpPlayer(BasePlayer):
 
     def do_update_track(self, metadata):
         self._ping()
-        self._metadata = metadata
+        self.__metadata = metadata
         self.track_changed()
         self._timer.stop()
 
@@ -137,7 +137,7 @@ class HttpPlayer(BasePlayer):
             self.position_changed()
 
     def get_metadata(self):
-        return self._metadata
+        return self.__metadata
 
     def get_status(self):
         return self._status

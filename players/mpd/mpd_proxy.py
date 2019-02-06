@@ -298,7 +298,7 @@ class MpdPlayer(BasePlayer):
     def __init__(self, proxy, playername):
         super(MpdPlayer, self).__init__(proxy, playername)
         self._inited = False
-        self._metadata = None
+        self.__metadata = None
         self._songid = -1
         self._playlist = -1
         self._repeat = None
@@ -345,7 +345,7 @@ class MpdPlayer(BasePlayer):
 
         if 'track' in changes:
             if self._songid is None:
-                self._metadata = Metadata()
+                self.__metadata = Metadata()
             else:
                 self._send_cmd(Cmds.CURRENTSONG, sync=True)
 
@@ -378,7 +378,7 @@ class MpdPlayer(BasePlayer):
             args['length'] = int(metadata['time']) * 1000
         if 'track' in metadata:
             args['tracknum'] = int(metadata['track'].split('/')[0])
-        self._metadata = Metadata(**args)
+        self.__metadata = Metadata(**args)
 
     def _parse_status(self, value):
         status_map = {
@@ -411,7 +411,7 @@ class MpdPlayer(BasePlayer):
         return self._state
 
     def get_metadata(self):
-        return self._metadata
+        return self.__metadata
 
     def get_position(self):
         return self._elapsed.time
@@ -471,7 +471,7 @@ class MpdPlayer(BasePlayer):
         ret = dbus.Dictionary(signature='sv')
         ret.update({
             'state': self._state,
-            'metadata': self._metadata.to_mpris1(),
+            'metadata': self.__metadata.to_mpris1(),
             'repeat': self._repeat,
             'single': self._single,
             'position': self.get_position()
