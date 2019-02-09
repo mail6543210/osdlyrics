@@ -375,8 +375,8 @@ class MpdPlayer(BasePlayer):
         for key in ('title', 'artist', 'album'):
             if key in metadata:
                 args[key] = metadata[key]
-        if 'time' in metadata:
-            args['length'] = int(metadata['time']) * 1000
+        if 'elapsed' in metadata:
+            args['length'] = int(float(metadata['elapsed']) * 1000)
         if 'track' in metadata:
             args['tracknum'] = int(metadata['track'].split('/')[0])
         self._metadata = Metadata(**args)
