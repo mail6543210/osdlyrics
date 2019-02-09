@@ -18,6 +18,7 @@
 # along with OSD Lyrics.  If not, see <http://www.gnu.org/licenses/>.
 #
 from builtins import object
+
 from datetime import datetime
 
 

@@ -21,6 +21,7 @@
 from future import standard_library
 standard_library.install_aliases()
 from builtins import str
+
 import logging
 import os
 import os.path
@@ -28,9 +29,9 @@ import re
 import urllib.parse
 import urllib.request
 
+import chardet
 import dbus
 import dbus.service
-import chardet
 
 import osdlyrics
 from osdlyrics.app import App
