@@ -30,6 +30,7 @@ if sys.version_info[0] > 2:
 import dbus
 
 from .consts import METADATA_ALBUM, METADATA_ARTIST, METADATA_TITLE
+from .utils import pp
 
 
 class Metadata(object):
@@ -143,12 +144,14 @@ class Metadata(object):
         self.Atracknum = v
     @property
     def location(self):
-        assert isinstance(self.Alocation, str) or self.Alocation is None
+        # allow: (None only if self==default) || (str)
+        assert self.is_default() or isinstance(self.Alocation, str), ('get', id(self), pp(self.Alocation, -id(self)))
         return self.Alocation
     @location.setter
     def location(self, v):
-        assert v is None or isinstance(v, str), type(v)
-        assert v is None or ('://' in v and v.index('://') > 0)
+        pp(v, id(self))
+        # allow: (set to None in __init__) || (valid uri str)
+        assert (v is None and not hasattr(self, 'Alength')) or (isinstance(v, str) and v.find('://') > 0), type(v)
         self.Alocation = v
     @property
     def length(self):
@@ -178,6 +181,7 @@ class Metadata(object):
         if self is other:
             return True
         if self.location == other.location and self.location != '':
+            assert self.location is not None
             return True
         for key in [METADATA_TITLE, METADATA_ARTIST, METADATA_ALBUM]:
             if getattr(self, key) != getattr(other, key):
