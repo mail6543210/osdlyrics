@@ -25,8 +25,8 @@ import time
 import glib
 
 from osdlyrics.metadata import Metadata
-from osdlyrics.player_proxy import (STATUS_PAUSED, STATUS_STOPPED, BasePlayer,
-                                    BasePlayerProxy, PlayerInfo)
+from osdlyrics.player_proxy import (STATUS, BasePlayer, BasePlayerProxy,
+                                    PlayerInfo)
 import osdlyrics.timer
 
 import server
@@ -92,7 +92,7 @@ class HttpPlayer(BasePlayer):
 
     def __init__(self, proxy, name, caps):
         super(HttpPlayer, self).__init__(proxy, name)
-        self._status = STATUS_STOPPED
+        self._status = STATUS.STOPPED
         self._caps = caps
         self._metadata = Metadata()
         self._last_ping = datetime.datetime.now()
@@ -121,9 +121,9 @@ class HttpPlayer(BasePlayer):
 
     def do_update_status(self, status):
         self._status = status
-        if status == STATUS_STOPPED:
+        if status == STATUS.STOPPED:
             self._timer.stop()
-        elif status == STATUS_PAUSED:
+        elif status == STATUS.PAUSED:
             self._timer.pause()
         else:
             self._timer.play()
