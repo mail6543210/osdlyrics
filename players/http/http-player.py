@@ -121,9 +121,9 @@ class HttpPlayer(BasePlayer):
 
     def do_update_status(self, status):
         self._status = status
-        if status == STATUS.STOPPED:
+        if status is STATUS.STOPPED:
             self._timer.stop()
-        elif status == STATUS.PAUSED:
+        elif status is STATUS.PAUSED:
             self._timer.pause()
         else:
             self._timer.play()

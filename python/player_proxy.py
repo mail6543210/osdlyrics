@@ -538,7 +538,7 @@ class BasePlayer(DBusObject):
             self.play_pause()
         else:
             status = self._get_cached_status()
-            if status == STATUS.PLAYING:
+            if status is STATUS.PLAYING:
                 self.pause()
             else:
                 self.play()

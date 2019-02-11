@@ -168,10 +168,10 @@ class Mpris2Player(BasePlayer):
 
     def set_repeat(self, repeat):
         try:
-            if repeat == REPEAT.TRACK:
+            if repeat is REPEAT.TRACK:
                 self._player_prop.Set(MPRIS2_PLAYER_INTERFACE, 'LoopStatus',
                                       'Track')
-            elif repeat == REPEAT.ALL:
+            elif repeat is REPEAT.ALL:
                 self._player_prop.Set(MPRIS2_PLAYER_INTERFACE, 'LoopStatus',
                                       'Playlist')
             else:

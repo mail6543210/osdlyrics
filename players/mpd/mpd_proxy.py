@@ -352,13 +352,13 @@ class MpdPlayer(BasePlayer):
                 self._send_cmd(Cmds.CURRENTSONG, sync=True)
 
         if 'status' in changes:
-            if self._state == STATUS.PAUSED:
+            if self._state is STATUS.PAUSED:
                 self._elapsed.pause()
-            elif self._state == STATUS.PLAYING:
+            elif self._state is STATUS.PLAYING:
                 self._elapsed.play()
             else:
                 self._elapsed.stop()
-        if self._state == STATUS.STOPPED:
+        if self._state is STATUS.STOPPED:
             elapsed = 0
         else:
             elapsed = float(status['elapsed']) * 1000
@@ -450,9 +450,9 @@ class MpdPlayer(BasePlayer):
         self._send_cmd(Cmds.RANDOM, self._random)
 
     def play(self):
-        if self._state == STATUS.PAUSED:
+        if self._state is STATUS.PAUSED:
             self._send_cmd(Cmds.PAUSE, 0)
-        elif self._state == STATUS.STOPPED:
+        elif self._state is STATUS.STOPPED:
             self._send_cmd(Cmds.PLAY)
 
     def pause(self):
