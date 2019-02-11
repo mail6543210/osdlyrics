@@ -4,7 +4,7 @@ m4_define([OL_MAJOR_VER], [0])
 m4_define([OL_MINOR_VER], [5])
 m4_define([OL_MICRO_VER], [0])
 m4_define([OL_BUILD], [-git])
-m4_define(OL_BUILD_VER,
+m4_define([OL_BUILD_VER],
           m4_esyscmd_s([if test 'x]OL_BUILD[' = 'x-git'; then (git log -1 --format=format:%ad --date=short 2>/dev/null || date -u -r ChangeLog +%Y%m%d) | sed 's/-//g'; fi]))
 
 m4_define([OL_VERSION], [OL_MAJOR_VER.OL_MINOR_VER.OL_MICRO_VER[]OL_BUILD[]OL_BUILD_VER])
@@ -47,10 +47,8 @@ AC_CHECK_FUNCS([ftruncate gettimeofday memset pathconf sqrt strcasecmp strchr st
 AM_ICONV
 
 #define paths
-OL_ICONDIR='${datadir}/${PACKAGE}/icons'
-AC_SUBST(OL_ICONDIR)
-OL_GUIDIR='${datadir}/${PACKAGE}'
-AC_SUBST(OL_GUIDIR)
+AC_SUBST([OL_ICONDIR], ["${datadir}/${PACKAGE}/icons"])
+AC_SUBST([OL_GUIDIR], ['${datadir}/${PACKAGE}'])
 
 # gprof support
 AC_ARG_WITH(gprof-support,
