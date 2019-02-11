@@ -20,6 +20,7 @@
 from __future__ import unicode_literals
 from builtins import object
 
+from enum import Enum, unique
 import logging
 
 import dbus
@@ -32,7 +33,8 @@ from .consts import (MPRIS2_PLAYER_INTERFACE, PLAYER_PROXY_INTERFACE,
 from .dbusext.service import Object as DBusObject, property as dbus_property
 
 
-class CAPS(object):
+@unique
+class CAPS(Enum):
     NEXT = 1 << 0
     PREV = 1 << 1
     PAUSE = 1 << 2
@@ -41,13 +43,15 @@ class CAPS(object):
     PROVIDE_METADATA = 1 << 5
 
 
-class REPEAT(object):
+@unique
+class REPEAT(Enum):
     NONE = 0
     TRACK = 1
     ALL = 2
 
 
-class STATUS(object):
+@unique
+class STATUS(Enum):
     PLAYING = 0
     PAUSED = 1
     STOPPED = 2
