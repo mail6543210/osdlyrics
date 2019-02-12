@@ -315,7 +315,7 @@ class MpdPlayer(BasePlayer):
         """ Send a cmd. Can use sync=[True|False] to send in a blocking or
         non-blocking way. Default is non-blocking
         """
-        sync = False if 'sync' not in kwargs else kwargs['sync']
+        sync = kwargs.get('sync', False)
         if cmd not in self.CMD_HANDLERS:
             raise RuntimeError('Unknown command: %s', cmd)
         handler = self.CMD_HANDLERS[cmd]
