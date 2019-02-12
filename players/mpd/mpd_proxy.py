@@ -23,6 +23,7 @@
 from __future__ import unicode_literals
 from builtins import object, super
 
+from enum import Enum, unique
 import logging
 import os
 import select
@@ -73,7 +74,8 @@ class CommandCallback(object):
             self.callback(*args)
 
 
-class Cmds(object):
+@unique
+class Cmds(Enum):
     CONFIG = 'config'
     CURRENTSONG = 'currentsong'
     IDLE = 'idle'
