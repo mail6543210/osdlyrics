@@ -21,6 +21,7 @@
 from builtins import str, super
 
 import logging
+logger = logging.getLogger(__file__)
 
 import dbus
 
@@ -41,11 +42,11 @@ def validateticket(component):
     def decorator(func):
         def dec_func(self, source_id, ticket, *args, **kwargs):
             if source_id not in self._sources:
-                logging.warning('%s is not in source list', source_id)
+                logger.warning('%s is not in source list', source_id)
                 return
             source = self._sources[source_id]
             if ticket not in source[component]:
-                logging.warning('%s is not valid %s ticket of source %s', ticket, component, source_id)
+                logger.warning('%s is not valid %s ticket of source %s', ticket, component, source_id)
                 return
             func(self, source_id, ticket, *args, **kwargs)
         return dec_func
@@ -71,17 +72,17 @@ class LyricSource(dbus.service.Object):
             try:
                 self._connect_source(bus_name, False)
             except Exception as e:
-                logging.warning('Fail to connect source %s: %s', bus_name, e)
+                logger.warning('Fail to connect source %s: %s', bus_name, e)
         for bus_name in map(str, self.connection.list_activatable_names()):
             try:
                 self._connect_source(bus_name, True)
             except Exception as e:
-                logging.warning('Fail to connect source %s: %s', bus_name, e)
+                logger.warning('Fail to connect source %s: %s', bus_name, e)
 
     def _connect_source(self, bus_name, activate):
         if not bus_name.startswith(LYRIC_SOURCE_PLUGIN_BUS_NAME_PREFIX):
             return
-        logging.info('Connecting to lyric source %s', bus_name)
+        logger.info('Connecting to lyric source %s', bus_name)
         source_id = bus_name[len(LYRIC_SOURCE_PLUGIN_BUS_NAME_PREFIX):]
         if source_id in self._sources:
             return
@@ -89,7 +90,7 @@ class LyricSource(dbus.service.Object):
             try:
                 self.connection.activate_name_owner(bus_name)
             except Exception as e:
-                logging.warning('Cannot activate lyric source %s: %s', bus_name, e)
+                logger.warning('Cannot activate lyric source %s: %s', bus_name, e)
                 return
         path = LYRIC_SOURCE_PLUGIN_OBJECT_PATH_PREFIX + source_id
         proxy = dbus.Interface(self.connection.get_object(bus_name, path),
@@ -113,7 +114,7 @@ class LyricSource(dbus.service.Object):
 
     @validateticket('search')
     def search_complete_cb(self, source_id, ticket, status, results):
-        logging.info('Search complete from %s, ticket: %s, status: %s, result: %s',
+        logger.info('Search complete from %s, ticket: %s, status: %s, result: %s',
                      source_id, ticket, status, len(results))
         source = self._sources[source_id]
         myticket = source['search'].pop(ticket)
@@ -135,7 +136,7 @@ class LyricSource(dbus.service.Object):
             if status == STATUS_FAILURE and mytask['failure'] is not False:
                 mytask['failure'] = True
             if not mytask['sources'] or mytask['sources'][0] != source_id:
-                logging.warning('Error, no source exists or source id mismatch with current id')
+                logger.warning('Error, no source exists or source id mismatch with current id')
                 self.SearchComplete(myticket, STATUS_FAILURE, results)
             else:
                 mytask['sources'].pop(0)
@@ -143,7 +144,7 @@ class LyricSource(dbus.service.Object):
 
     @validateticket('download')
     def download_complete_cb(self, source_id, ticket, status, content):
-        logging.info('Download complete from %s, ticket: %s, status: %s, content length: %s',
+        logger.info('Download complete from %s, ticket: %s, status: %s, content length: %s',
                      source_id, ticket, status, len(content))
         source = self._sources[source_id]
         myticket = source['download'].pop(ticket)
@@ -184,7 +185,7 @@ class LyricSource(dbus.service.Object):
                 nextsource = task['sources'][0]
                 break
             else:
-                logging.warning('Source %s not exist', task['sources'][0])
+                logger.warning('Source %s not exist', task['sources'][0])
                 task['sources'].pop(0)
         if nextsource is None:
             status = STATUS_SUCCESS if not task['failure'] else STATUS_FAILURE

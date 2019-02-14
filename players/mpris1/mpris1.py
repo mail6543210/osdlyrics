@@ -21,6 +21,8 @@ from builtins import str, super
 
 from contextlib import contextmanager
 import logging
+logger = logging.getLogger(__file__)
+logger.setLevel(logging.WARNING)
 
 import dbus
 
@@ -98,7 +100,7 @@ class Mpris1Player(BasePlayer):
             self._name_watch = self.connection.watch_name_owner(mpris1_service_name,
                                                                 self._name_lost)
         except Exception as e:
-            logging.error('Fail to connect to mpris1 player %s: %s', player_name, e)
+            logger.error('Fail to connect to mpris1 player %s: %s', player_name, e)
             self.disconnect()
 
     def _name_lost(self, name):
@@ -161,7 +163,7 @@ class Mpris1Player(BasePlayer):
 
     def get_metadata(self):
         mt = self._player.GetMetadata()
-        logging.debug(repr(mt))
+        logger.debug(repr(mt))
         return Metadata.from_dict(mt)
 
     def get_caps(self):
@@ -223,6 +225,8 @@ class Mpris1Player(BasePlayer):
 
 
 def run():
+    import os
+    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'NOTSET')))
     mpris1 = ProxyObject()
     mpris1.run()
 

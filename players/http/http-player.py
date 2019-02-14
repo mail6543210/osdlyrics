@@ -21,6 +21,7 @@ from builtins import super
 
 import datetime
 import logging
+logger = logging.getLogger(__file__)
 import time
 
 from gi.repository import GLib
@@ -50,7 +51,7 @@ class HttpPlayerProxy(BasePlayerProxy):
         self._player_counter = 1
 
     def _handle_req(self, fd, event):
-        logging.debug('new request %s, %s', fd, event)
+        logger.debug('new request %s, %s', fd, event)
         self._server.handle_request()
         return True
 
@@ -108,7 +109,7 @@ class HttpPlayer(BasePlayer):
         now = datetime.datetime.now()
         duration = now - self._last_ping
         if duration.total_seconds() * 1000 > CONNECTION_TIMEOUT * 2:
-            logging.warning('%s connection timeout', self.name)
+            logger.warning('%s connection timeout', self.name)
             self.disconnect()
 
     def disconnect(self):

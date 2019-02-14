@@ -24,6 +24,7 @@ from __future__ import unicode_literals
 from builtins import object, super
 
 import logging
+logger = logging.getLogger(__file__)
 import os
 import select
 import sys
@@ -35,7 +36,7 @@ try:
     import mpd
     assert hasattr(mpd.MPDClient(), 'send_idle')
 except (ImportError, AssertionError):
-    logging.error('python-mpd >= 0.3 is required.')
+    logger.error('python-mpd >= 0.3 is required.')
     sys.exit(1)
 
 from osdlyrics.consts import PLAYER_PROXY_INTERFACE
@@ -122,11 +123,11 @@ class MpdProxy(BasePlayerProxy):
         try:
             self._client.connect(self._host, self._port)
         except IOError as e:
-            logging.info("Could not connect to '%s': %s", self._host,
+            logger.info("Could not connect to '%s': %s", self._host,
                          e.strerror)
             return False
         except mpd.MPDError as e:
-            logging.info("Could not connect to '%s': %s", self._host, e)
+            logger.info("Could not connect to '%s': %s", self._host, e)
             return False
         self._io_watch = GLib.io_add_watch(self._client,
                                            GLib.PRIORITY_DEFAULT,
@@ -164,21 +165,21 @@ class MpdProxy(BasePlayerProxy):
         while self._fetch_queue:
             try:
                 cmd_item = self._fetch_queue.pop(0)
-                logging.debug('fetch cmd: %s', cmd_item.command)
+                logger.debug('fetch cmd: %s', cmd_item.command)
                 if not callable(cmd_item.callback):
                     continue
-                logging.debug('client pending: %s', self._client._pending)
+                logger.debug('client pending: %s', self._client._pending)
                 retval = getattr(self._client, 'fetch_' + cmd_item.command)()
                 cmd_item.call(retval)
             except Exception as e:
-                logging.exception(e)
+                logger.exception(e)
                 self._on_disconnect()
             return True
 
         # no pending data, socket might be closed
         data = os.read(self._client.fileno(), 1024)
         if not data:              # connection closed
-            logging.info('connection closed')
+            logger.info('connection closed')
             self._on_disconnect()
             return
         else:
@@ -201,8 +202,8 @@ class MpdProxy(BasePlayerProxy):
         if not self._is_connected:
             raise NoConnectionError()
         on_idle = self._is_on_idle()
-        logging.debug('send %s %s', command, args)
-        logging.debug('on idle: %s', on_idle)
+        logger.debug('send %s %s', command, args)
+        logger.debug('on idle: %s', on_idle)
         if on_idle:
             self._stop_idle()
         getattr(self._client, 'send_' + command)(*args)
@@ -210,12 +211,12 @@ class MpdProxy(BasePlayerProxy):
             self._enqueue_callback(command, callback)
         if on_idle:
             self._start_idle()
-        logging.debug('cmd queue: %s',
+        logger.debug('cmd queue: %s',
                       [item.command for item in self._fetch_queue])
 
     def send_command_sync(self, command, callback, *args):
         self.send_command(command, callback, *args)
-        logging.debug('send sync to fetch: %s', self._fetch_queue)
+        logger.debug('send sync to fetch: %s', self._fetch_queue)
         while len(self._fetch_queue) > 1 \
                 or (len(self._fetch_queue) == 1
                     and self._fetch_queue[0].command != Cmds.IDLE):
@@ -231,13 +232,13 @@ class MpdProxy(BasePlayerProxy):
     def _start_idle(self):
         if not self._is_connected() or self._is_on_idle():
             return
-        logging.debug('start idle')
+        logger.debug('start idle')
         self.send_command(Cmds.IDLE, self._fetch_idle)
 
     def _stop_idle(self):
         if not self._is_connected() or not self._is_on_idle():
             return
-        logging.debug('stop idle')
+        logger.debug('stop idle')
         self._client.send_noidle()
         self._enqueue_callback(Cmds.NOIDLE, None)
 
@@ -329,7 +330,7 @@ class MpdPlayer(BasePlayer):
             self.proxy.send_command(cmd, handler, *args)
 
     def _handle_status(self, status):
-        logging.debug('status\n%s', status)
+        logger.debug('status\n%s', status)
         changes = set()
         for prop, handler in self.STATUS_CHANGE_MAP.items():
             if prop not in status:
@@ -340,7 +341,7 @@ class MpdPlayer(BasePlayer):
                     func = getattr(self, func)
                 value = func(status[prop])
             if value != getattr(self, '_' + prop):
-                logging.debug('prop %s changed to %s', prop, value)
+                logger.debug('prop %s changed to %s', prop, value)
                 setattr(self, '_' + prop, value)
                 changes.add(handler[1])
 
@@ -370,7 +371,7 @@ class MpdPlayer(BasePlayer):
             getattr(self, change + '_changed')()
 
     def _handle_currentsong(self, metadata):
-        logging.debug('currentsong: %s', metadata)
+        logger.debug('currentsong: %s', metadata)
         args = {}
         for key in ('title', 'artist', 'album'):
             if key in metadata:
@@ -404,8 +405,8 @@ class MpdPlayer(BasePlayer):
             if change in self.CHANGE_CMDS:
                 for cmd in self.CHANGE_CMDS[change]:
                     cmds.add(cmd)
-        logging.debug('changes: %s', changes)
-        logging.debug('cmds: %s', cmds)
+        logger.debug('changes: %s', changes)
+        logger.debug('cmds: %s', cmds)
         for cmd in cmds:
             self._send_cmd(cmd)
 
@@ -482,5 +483,6 @@ class MpdPlayer(BasePlayer):
 
 
 if __name__ == '__main__':
+    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'NOTSET')))
     proxy = MpdProxy()
     proxy.run()

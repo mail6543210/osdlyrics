@@ -23,6 +23,7 @@ standard_library.install_aliases()
 from builtins import str, super
 
 import configparser
+import logging
 
 import dbus
 import dbus.service
@@ -32,6 +33,8 @@ from osdlyrics.app import App
 from osdlyrics.consts import CONFIG_BUS_NAME, CONFIG_OBJECT_PATH
 import osdlyrics.errors
 import osdlyrics.utils
+
+logger = logging.getLogger(__file__)
 
 
 class MalformedKeyError(osdlyrics.errors.BaseError):
@@ -276,6 +279,8 @@ def test():
 
 
 def run():
+    import os
+    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'NOTSET')))
     app = App('Config')
     if len(sys.argv) > 1:
         ini_conf = IniConfig(app.connection, sys.argv[1])

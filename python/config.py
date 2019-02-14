@@ -21,6 +21,7 @@
 from builtins import object
 
 import logging
+logger = logging.getLogger(__file__)
 
 import dbus
 
@@ -160,7 +161,7 @@ class Config(object):
 def test():
     def value_changed(name):
         typename = name.split('/')[1]
-        logging.debug('%s has been changed to %s', name, getattr(config, 'get_' + typename)(name))
+        logger.debug('%s has been changed to %s', name, getattr(config, 'get_' + typename)(name))
 
     from gi.repository import GLib
     from dbus.mainloop.glib import DBusGMainLoop

@@ -20,6 +20,7 @@
 
 from abc import ABCMeta
 import logging
+logger = logging.getLogger(__file__)
 import sys
 import xml.etree.ElementTree as xet
 
@@ -183,7 +184,7 @@ class Object(ObjectType):
     @dbus.service.signal(dbus_interface=dbus.PROPERTIES_IFACE,
                          signature='sa{sv}as')
     def PropertiesChanged(self, iface_name, changed_props, invalidated_props):
-        logging.debug('%s changed: %s invalidated: %s', iface_name, changed_props, invalidated_props)
+        logger.debug('%s changed: %s invalidated: %s', iface_name, changed_props, invalidated_props)
         pass
 
     @dbus.service.method(dbus.service.INTROSPECTABLE_IFACE, in_signature='', out_signature='s',
@@ -355,29 +356,29 @@ def test():
     def get_reply_handler(expected_value):
         def handler(value):
             if value != expected_value:
-                logging.warning('Get failed, expect %s but %s got', expected_value, value)
+                logger.warning('Get failed, expect %s but %s got', expected_value, value)
             else:
-                logging.debug('Get succesful')
+                logger.debug('Get succesful')
         return handler
 
     def get_all_reply_handler(expected_dict):
         def handler(value):
             for k, v in value.items():
                 if k not in expected_dict:
-                    logging.warning('GetAll: unexpected key %s', k)
+                    logger.warning('GetAll: unexpected key %s', k)
                 elif v != expected_dict[k]:
-                    logging.warning('GetAll: expected value of key %s is %s but %s got', k, expected_dict[k], v)
+                    logger.warning('GetAll: expected value of key %s is %s but %s got', k, expected_dict[k], v)
             for k in expected_dict:
                 if k not in value:
-                    logging.warning('GetAll: missing key %s', k)
-            logging.debug('GetAll finished')
+                    logger.warning('GetAll: missing key %s', k)
+            logger.debug('GetAll finished')
         return handler
 
     def set_reply_handler():
-        logging.debug('Set succeed')
+        logger.debug('Set succeed')
 
     def error_handler(e):
-        logging.error('Error %s', e)
+        logger.error('Error %s', e)
 
     def introspect_reply_handler(xml):
         # print xml
@@ -385,7 +386,7 @@ def test():
 
     def msg_handler(msg):
         def handler(*args, **kwargs):
-            logging.debug(msg)
+            logger.debug(msg)
         return handler
 
     def test_timeout():

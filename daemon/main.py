@@ -21,6 +21,8 @@ from __future__ import print_function
 from builtins import super
 
 import logging
+logging.basicConfig()
+logger = logging.getLogger('Daemon')
 
 import dbus
 
@@ -35,7 +37,7 @@ import lyrics
 import lyricsource
 import player
 
-logging.basicConfig(level=logging.WARNING)
+# logger.setLevel(logging.WARNING)
 
 
 class InvalidClientNameException(Exception):
@@ -74,7 +76,7 @@ class MainApp(App):
         try:
             self.connection.activate_name_owner(CONFIG_BUS_NAME)
         except Exception:
-            logging.error("Cannot activate config service")
+            logger.error("Cannot activate config service")
 
     def _player_properties_changed(self, iface, changed, invalidated):
         if 'Metadata' in changed:
@@ -107,7 +109,7 @@ class DaemonObject(dbus.service.Object):
                          in_signature='s',
                          out_signature='')
     def Hello(self, client_bus_name):
-        logging.info('A new client connected: %s', client_bus_name)
+        logger.info('A new client connected: %s', client_bus_name)
         if is_valid_client_bus_name(client_bus_name):
             if client_bus_name not in self._watch_clients:
                 self._watch_clients[client_bus_name] = \
@@ -132,16 +134,18 @@ class DaemonObject(dbus.service.Object):
 
     def _client_owner_changed(self, name, owner):
         if owner == '':
-            logging.info('Client %s disconnected', name)
+            logger.info('Client %s disconnected', name)
             if name in self._watch_clients:
                 self._watch_clients[name].cancel()
                 del self._watch_clients[name]
             if not self._watch_clients:
-                logging.info('All client disconnected, quit the daemon')
+                logger.info('All client disconnected, quit the daemon')
                 self._app.quit()
 
 
 def main():
+    import os
+    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'WARNING')))
     try:
         app = MainApp()
         app.run()

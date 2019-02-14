@@ -21,6 +21,7 @@ from __future__ import unicode_literals
 from builtins import object
 
 import logging
+logger = logging.getLogger(__file__)
 import re
 
 import dbus
@@ -313,7 +314,7 @@ class Metadata(object):
                 kargs['tracknum'] = tracknumber
             else:
                 if not re.match(r'\d+(/\d+)?', tracknumber):
-                    logging.warning('Malfromed tracknumber: %s', tracknumber)
+                    logger.warning('Malfromed tracknumber: %s', tracknumber)
                 else:
                     kargs['tracknum'] = int(dbusdict['tracknumber'].split('/')[0])
         if 'tracknum' not in kargs and 'xesam:trackNumber' in dbusdict:

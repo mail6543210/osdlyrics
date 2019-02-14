@@ -20,6 +20,7 @@
 from builtins import str, super
 
 import logging
+logger = logging.getLogger(__file__)
 
 import dbus
 import dbus.service
@@ -130,7 +131,7 @@ class Mpris2Player(BasePlayer):
                     'Metadata': 'track_changed',
                     }
         # status_props = ['PlaybackStatus', 'LoopStatus', 'Shuffle']
-        logging.debug('Status changed: %s', changed)
+        logger.debug('Status changed: %s', changed)
         for caps in caps_props:
             if caps in changed:
                 self.caps_changed()
@@ -187,7 +188,7 @@ class Mpris2Player(BasePlayer):
             return playback_dict[self._player_prop.Get(MPRIS2_PLAYER_INTERFACE,
                                                        'PlaybackStatus')]
         except Exception as e:
-            logging.error('Failed to get status: %s', e)
+            logger.error('Failed to get status: %s', e)
             return STATUS.PLAYING
 
     def get_repeat(self):
@@ -234,6 +235,8 @@ class Mpris2Player(BasePlayer):
 
 
 def run():
+    import os
+    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'NOTSET')))
     mpris2 = ProxyObject()
     mpris2.run()
 

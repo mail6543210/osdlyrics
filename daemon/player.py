@@ -20,6 +20,8 @@
 from builtins import str, super
 
 import logging
+logger = logging.getLogger('Daemon')
+logger.setLevel(logging.WARNING)
 
 from dbus.exceptions import DBusException
 import dbus.service
@@ -89,13 +91,13 @@ class PlayerSupport(dbus.service.Object):
     def _connect_proxy(self, bus_name, activate):
         if not bus_name.startswith(PLAYER_PROXY_BUS_NAME_PREFIX):
             return
-        logging.info('Connecting to player proxy %s', bus_name)
+        logger.info('Connecting to player proxy %s', bus_name)
         proxy_name = bus_name[len(PLAYER_PROXY_BUS_NAME_PREFIX):]
         if activate:
             try:
                 self.connection.activate_name_owner(bus_name)
             except Exception as e:
-                logging.warning('Cannot activate proxy %s: %s', bus_name, e)
+                logger.warning('Cannot activate proxy %s: %s', bus_name, e)
         self.connection.watch_name_owner(bus_name,
                                          lambda name: self._proxy_name_changed(proxy_name, len(name) == 0))
 
@@ -133,7 +135,7 @@ class PlayerSupport(dbus.service.Object):
 
     def _player_lost_cb(self, player_name):
         if self._active_player and self._active_player['info']['name'] == player_name:
-            logging.info('Player %s lost', player_name)
+            logger.info('Player %s lost', player_name)
             self._active_player = None
             self._mpris2_player.disconnect_player()
             self.PlayerLost()
@@ -142,7 +144,7 @@ class PlayerSupport(dbus.service.Object):
     def _proxy_name_changed(self, proxy_name, lost):
         bus_name = PLAYER_PROXY_BUS_NAME_PREFIX + proxy_name
         if not lost:
-            logging.info('Get player proxy %s', proxy_name)
+            logger.info('Get player proxy %s', proxy_name)
             proxy = self.connection.get_object(
                 bus_name, PLAYER_PROXY_OBJECT_PATH_PREFIX + proxy_name)
             proxy.connect_to_signal('PlayerLost',
@@ -152,7 +154,7 @@ class PlayerSupport(dbus.service.Object):
         else:
             if proxy_name not in self._player_proxies:
                 return
-            logging.info('Player proxy %s lost', proxy_name)
+            logger.info('Player proxy %s lost', proxy_name)
             proxy = self._player_proxies[proxy_name]
             # If current player is provided by the proxy, it is lost.
             if self._active_player and self._active_player['proxy'] == proxy:

@@ -23,6 +23,7 @@ from future import standard_library
 standard_library.install_aliases()
 
 import logging
+logger = logging.getLogger('Daemon')
 import os
 import os.path
 import re
@@ -109,13 +110,13 @@ def decode_by_charset(content):
     # case,chardet may fail to determine what the encoding it is. So we take
     # half of the content of it and try again.
     if not encoding and len(content) > DETECT_CHARSET_GUESS_MIN_LEN:
-        logging.warning('Failed to detect encoding, try to decode a part of it')
+        logger.warning('Failed to detect encoding, try to decode a part of it')
         content_half = len(content) // 2
         slice_end = min(max(DETECT_CHARSET_GUESS_MIN_LEN, content_half), DETECT_CHARSET_GUESS_MAX_LEN)
         encoding = chardet.detect(content[:slice_end])['encoding']
-        logging.warning('guess encoding from part: ' + encoding)
+        logger.warning('guess encoding from part: ' + encoding)
     if not encoding:
-        logging.warning('Failed to detect encoding, use utf-8 as fallback')
+        logger.warning('Failed to detect encoding, use utf-8 as fallback')
         encoding = 'utf-8'
 
     # When we take half of the content to determine the encoding, chardet may
@@ -165,7 +166,7 @@ def _load_from_file(urlparts):
         with open(path, 'rb') as f:
             return f.read()
     except IOError as e:
-        logging.info("Cannot open file %s to read: %s", path, e)
+        logger.info("Cannot open file %s to read: %s", path, e)
         return None
 
 
@@ -199,7 +200,7 @@ def _save_to_file(urlparts, content, create):
     path = urllib.request.url2pathname(urlparts.path)
     if not create:
         if not os.path.isfile(path):
-            logging.warning("Cannot write to file %s: file not exists", path)
+            logger.warning("Cannot write to file %s: file not exists", path)
             return False
     else:
         dirname = os.path.dirname(path)
@@ -207,12 +208,12 @@ def _save_to_file(urlparts, content, create):
             try:
                 os.makedirs(os.path.dirname(path), 0o755)
             except OSError as e:
-                logging.warning("Cannot create directories for %s: %s", path, e)
+                logger.warning("Cannot create directories for %s: %s", path, e)
                 return False
     try:
         file = open(path, 'wb')
     except IOError as e:
-        logging.info("Cannot open file %s to write: %s", path, e)
+        logger.info("Cannot open file %s to write: %s", path, e)
         return False
     file.write(content)
     return True
@@ -309,12 +310,12 @@ class LyricsService(dbus.service.Object):
         if uri:
             lrc = load_from_uri(uri)
             if lrc is not None:
-                logging.info("LRC for track %s not found in db but found by pattern: %s", metadata_description(metadata), uri)
+                logger.info("LRC for track %s not found in db but found by pattern: %s", metadata_description(metadata), uri)
         if lrc is None:
-            logging.info("LRC for track %s not found", metadata_description(metadata))
+            logger.info("LRC for track %s not found", metadata_description(metadata))
             return False, '', ''
         else:
-            logging.info("LRC for track %s found: %s", metadata_description(metadata), uri)
+            logger.info("LRC for track %s found: %s", metadata_description(metadata), uri)
             return True, uri, lrc
 
     @dbus.service.method(dbus_interface=LYRICS_INTERFACE,
@@ -417,7 +418,7 @@ class LyricsService(dbus.service.Object):
         return None
 
     def set_current_metadata(self, metadata):
-        logging.info('Setting current metadata: %s', metadata)
+        logger.info('Setting current metadata: %s', metadata)
         self._metadata = metadata
 
 

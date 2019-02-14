@@ -24,6 +24,7 @@ standard_library.install_aliases()
 import http.server
 import json
 import logging
+logger = logging.getLogger(__file__)
 import urllib.parse
 
 from osdlyrics.metadata import Metadata
@@ -99,7 +100,7 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
                       'caps': PARAM_CAPS,
                       })
     def do_connect(self, params):
-        logging.debug('caps: %s', params['caps'])
+        logger.debug('caps: %s', params['caps'])
         return json.dumps({'id': self.server.player_proxy.add_player(params['name'],
                                                                      params['caps']),
                            })

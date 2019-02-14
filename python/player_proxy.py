@@ -23,6 +23,7 @@ from future.utils import raise_from
 
 from abc import abstractmethod
 import logging
+logger = logging.getLogger(__file__)
 
 import dbus
 import dbus.service
@@ -120,7 +121,7 @@ class BasePlayerProxy(dbus.service.Object):
         if player and player.connected:
             player.set_disconnect_cb(self._player_lost_cb)
             self._connected_players[player_name] = player
-            logging.info('Connected to %s', player.object_path)
+            logger.info('Connected to %s', player.object_path)
             return player.object_path
         else:
             raise ConnectPlayerError('%s cannot be connected', player_name)

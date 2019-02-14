@@ -23,6 +23,7 @@ standard_library.install_aliases()
 from builtins import chr, object, range, str, super
 
 import logging
+logger = logging.getLogger(__file__)
 import threading
 
 import dbus
@@ -130,7 +131,7 @@ class BaseTaskThread(threading.Thread):
             ret = self._target(*self._args, **self._kwargs)
             self._onfinish(ret)
         except Exception as e:
-            logging.exception('Got exception in thread')
+            logger.exception('Got exception in thread')
             self._onerror(e)
         import sys
         sys.stdout.flush()
@@ -191,7 +192,7 @@ class BaseLyricSourcePlugin(DBusObject):
     def do_searchfailure(self, ticket, e):
         if ticket in self._search_tasks:
             del self._search_tasks[ticket]
-            logging.info('Search fail, %s', e)
+            logger.info('Search fail, %s', e)
             self.SearchComplete(ticket, SEARCH_FAILED, [])
 
     @dbus.service.method(dbus_interface=LYRIC_SOURCE_PLUGIN_INTERFACE,
@@ -274,13 +275,13 @@ class BaseLyricSourcePlugin(DBusObject):
     @dbus.service.signal(dbus_interface=LYRIC_SOURCE_PLUGIN_INTERFACE,
                          signature='iiaa{sv}')
     def SearchComplete(self, ticket, status, results):
-        logging.debug('search complete: ticket: %d, status: %d', ticket, status)
+        logger.debug('search complete: ticket: %d, status: %d', ticket, status)
         pass
 
     @dbus.service.signal(dbus_interface=LYRIC_SOURCE_PLUGIN_INTERFACE,
                          signature='iiay')
     def DownloadComplete(self, ticket, status, result):
-        logging.debug('download complete: ticket: %d, status: %d%s', ticket, status, '' if status == DOWNLOAD_SUCCEED else ', result: %s' % result)
+        logger.debug('download complete: ticket: %d, status: %d%s', ticket, status, '' if status == DOWNLOAD_SUCCEED else ', result: %s' % result)
         pass
 
     def run(self):
@@ -317,7 +318,7 @@ def test():
 
         def do_search(self, metadata):
             if metadata.title:
-                logging.info('title: %s', metadata.title)
+                logger.info('title: %s', metadata.title)
                 results = [SearchResult(title=metadata.title + str(i),
                                         artist=metadata.artist + str(i),
                                         album=metadata.album + str(i),
@@ -338,20 +339,20 @@ def test():
 
     def search_reply(ticket, expect_status):
         if ticket in search_tickets:
-            logging.warning('Error: search ticket %d exists', ticket)
+            logger.warning('Error: search ticket %d exists', ticket)
         else:
             search_tickets[ticket] = expect_status
 
     def search_complete_cb(ticket, status, results):
         if ticket not in search_tickets:
-            logging.warning('Error! search ticket not exists')
+            logger.warning('Error! search ticket not exists')
             return
 
         if search_tickets[ticket] != status:
-            logging.warning('Error! expect search %d with status %d but %d got',
+            logger.warning('Error! expect search %d with status %d but %d got',
                             ticket, search_tickets[ticket], status)
             return
-        logging.debug('Search #%d with status %d', ticket, status)
+        logger.debug('Search #%d with status %d', ticket, status)
         if status == 0:
             downloadinfo = results[0]['downloadinfo']
             source.Download(downloadinfo,
@@ -362,23 +363,23 @@ def test():
 
     def download_reply(ticket, expect_status):
         if ticket in download_tickets:
-            logging.warning('Error: download ticket %d already exists', ticket)
+            logger.warning('Error: download ticket %d already exists', ticket)
         else:
             download_tickets[ticket] = expect_status
 
     def download_complete_cb(ticket, status, content):
         if ticket not in download_tickets:
-            logging.warning('Error! download ticket not exists')
+            logger.warning('Error! download ticket not exists')
             return
 
         if download_tickets[ticket] != status:
-            logging.warning('Error! expect download status %d but %d got', download_tickets[ticket], status)
+            logger.warning('Error! expect download status %d but %d got', download_tickets[ticket], status)
             return
         if status == 0:
-            logging.debug('Download #%d success', ticket)
-            logging.debug('Downloaded content: \n%s', ''.join([chr(b) for b in content]))
+            logger.debug('Download #%d success', ticket)
+            logger.debug('Downloaded content: \n%s', ''.join([chr(b) for b in content]))
         else:
-            logging.warning('Download #%d fail, msg: %s', ticket, ''.join([chr(b) for b in content]))
+            logger.warning('Download #%d fail, msg: %s', ticket, ''.join([chr(b) for b in content]))
         del download_tickets[ticket]
         check_quit()
 
@@ -390,7 +391,7 @@ def test():
             app.quit()
 
     def dummy_error(e):
-        logging.warning('Error: ' + e)
+        logger.warning('Error: ' + e)
 
     dummysource = DummyLyricSourcePlugin()
     app = dummysource.app

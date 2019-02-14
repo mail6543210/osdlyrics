@@ -24,6 +24,7 @@ standard_library.install_aliases()
 
 import http.client
 import logging
+logger = logging.getLogger(__file__)
 import re
 
 import pycurl
@@ -60,7 +61,7 @@ class Lrc123Source(BaseLyricSourcePlugin):
                 params=params,
                 proxy=get_proxy_settings(config=self.config_proxy))
         except pycurl.error as e:
-            logging.error('Download failed. %s', e.args[1])
+            logger.error('Download failed. %s', e.args[1])
             return []
 
         if status < 200 or status >= 400:
