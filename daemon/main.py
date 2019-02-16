@@ -37,7 +37,7 @@ import lyrics
 import lyricsource
 import player
 
-# logger.setLevel(logging.WARNING)
+logger.setLevel(logging.WARNING)
 
 
 class InvalidClientNameException(Exception):
@@ -144,8 +144,6 @@ class DaemonObject(dbus.service.Object):
 
 
 def main():
-    import os
-    logger.setLevel(getattr(logging, os.getenv('DEBUG', 'WARNING')))
     try:
         app = MainApp()
         app.run()
