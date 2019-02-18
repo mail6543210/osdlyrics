@@ -73,16 +73,13 @@ class PlayerSupport(dbus.service.Object):
         """
         detected = False
         for proxy in self._player_proxies.values():
-            try:
-                active_players = proxy.ListActivePlayers()
-                for player_info in active_players:
-                    if self._connect_player(proxy, player_info):
-                        detected = True
-                        break
-                if detected:
+            active_players = proxy.ListActivePlayers()
+            for player_info in active_players:
+                if self._connect_player(proxy, player_info):
+                    detected = True
                     break
-            except Exception:
-                pass
+            if detected:
+                break
         if detected and self._detect_timer:
             GLib.source_remove(self._detect_timer)
             self._detect_timer = None
