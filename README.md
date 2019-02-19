@@ -40,7 +40,7 @@ On Ubuntu, the following packages need to be installed to compile OSD Lyrics:
 - Supported players:
     - MPRIS2
     - MPRIS
-    - [MPD](https://www.musicpd.org): mpd (>= 0.16.0), python-mpd
+    - [MPD](https://www.musicpd.org): mpd (>= 0.16.0), python-mpd2 (>= 0.3.0) | python-mpd
 
 ## Cloning repository
 
