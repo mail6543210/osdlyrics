@@ -271,10 +271,10 @@ class LyricsService(dbus.service.Object):
         uri = self._db.find(metadata)
         if uri == '':
             return 'none:'
-        return ensure_uri_scheme(uri)
+        return ensure_uri_scheme(uri)  # Optional[Non-empty-Text] -> Option[path2uri|unchange]
 
     def find_lrc_by_pattern(self, metadata):
-        return ensure_uri_scheme(self._expand_patterns(metadata))
+        return ensure_uri_scheme(self._expand_patterns(metadata))  # Optional[abspath] -> Optional[path2uri()->uri]
 
     def assign_lrc_uri(self, metadata, uri):
         self._db.assign(metadata, uri)
