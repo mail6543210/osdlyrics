@@ -1,7 +1,8 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --with autoreconf
+	dh $@ --with autoreconf --parallel
+	# don't need --parallel given debhelper>=9.20160115
 
 override_dh_auto_install:
 	# disable python byte-compiling by Automake
