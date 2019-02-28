@@ -23,18 +23,9 @@ Build-Depends:
 Package: osdlyrics
 Architecture: any
 Depends:
-# python-dbus,
-# python-gi (>= 3.11.1),
-# python-chardet,
-# python-pycurl,
-# python-configparser,
- ${python:Depends},
+ python3-osdlyrics (= ${binary:Version}) | python-osdlyrics (= ${binary:Version}),
  ${shlibs:Depends},
  ${misc:Depends}
-Suggests:
- python-mpd (>= 0.3),
- python-gi,
- python-kde4
 Description: Show lyrics with your favorite media player.
  OSD Lyrics is a lyrics show compatible with various media players.
  It is not a plugin but a standalone program.
@@ -42,3 +33,34 @@ Description: Show lyrics with your favorite media player.
  It also provides another displaying style,
  in which lyrics scroll from bottom to top.
  OSD Lyrics can download lyrics from the network automatically.
+
+Package: python-osdlyrics
+Section: python
+Architecture: all
+Depends:
+ python-dbus,
+ python-gi (>= 3.11.1),
+ python-chardet,
+ python-pycurl,
+ python-configparser,
+ ${python:Depends},
+Suggests:
+ python-mpd (= 0.3),
+ python-kde4
+Description: Show lyrics with your favorite media player.
+ ext desc
+
+Package: python3-osdlyrics
+Section: python
+Architecture: all
+Depends:
+ python3-dbus,
+ python3-gi (>= 3.11.1),
+ python3-chardet,
+ python3-pycurl,
+ ${python3:Depends},
+Suggests:
+ python3-mpd (>> 0.3),
+ python3-kde4
+Description: Show lyrics with your favorite media player.
+ ext desc
