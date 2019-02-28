@@ -1,13 +1,24 @@
 #!/usr/bin/make -f
 export DH_VERBOSE=1
+export PYBUILD_NAME=osdlyrics
 
 %:
 	dh $@ --with autoreconf,python2,python3 --parallel
 	# don't need --parallel given debhelper>=9.20160115
 
+override_dh_auto_clean:
+	-dh_auto_clean --buildsystem=pybuild
+	-dh_auto_clean --buildsystem=autoconf
+override_dh_auto_configure:
+	dh_auto_configure --buildsystem=autoconf
+	dh_auto_configure --buildsystem=pybuild
+override_dh_auto_build:
+	dh_auto_build --buildsystem=autoconf
+	dh_auto_build --buildsystem=pybuild
 override_dh_auto_test:
-	dh_auto_test -- V=1
+	dh_auto_test --buildsystem=autoconf -- V=1
 override_dh_auto_install:
 	# disable python byte-compiling by Automake
 	echo -n > "${CURDIR}/py-compile"
-	dh_auto_install
+	dh_auto_install --buildsystem=autoconf
+	dh_auto_install --buildsystem=pybuild
