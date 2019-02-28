@@ -5,15 +5,17 @@ Maintainer: mail6543210 <mail6543210l@yahoo.com.tw>
 Homepage: https://github.com/osdlyrics/osdlyrics
 Standards-Version: 3.9.5
 Vcs-Git: https://github.com/osdlyrics/osdlyrics.git
+X-Python3-Version: >= 3.4
 Build-Depends:
  debhelper,
+ python, python3,
 # no dh-autoreconf (debhelper>=9.20160402)
  dh-autoreconf,
+ dh-python,
  intltool,
  libgtk2.0-dev,
  libdbus-glib-1-dev,
  libnotify-dev,
- python, python3,
 # optional:
  libappindicator-dev,
 # not sure:
