@@ -22,3 +22,4 @@ $(service_DATA): $(service_in_files)
 CLEANFILES = \
 	org.osdlyrics.PlayerProxy.Http.service \
 	$(NULL)
+.PHONY: $(service_DATA)

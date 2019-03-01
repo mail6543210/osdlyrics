@@ -11,3 +11,4 @@ osdlyrics-create-lyricsource: osdlyrics-create-lyricsource.in
 CLEANFILES = \
 	osdlyrics-create-lyricsource \
 	$(NULL)
+.PHONY: osdlyrics-create-lyricsource

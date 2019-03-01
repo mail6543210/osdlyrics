@@ -65,3 +65,4 @@ CLEANFILES = \
 	$(bin_SCRIPTS) \
 	$(desktop_DATA) \
 	$(NULL)
+.PHONY: osdlyrics-daemon $(service_DATA)

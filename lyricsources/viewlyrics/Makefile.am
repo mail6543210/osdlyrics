@@ -17,3 +17,4 @@ $(service_DATA): $(service_in_files)
 CLEANFILES = \
 	org.osdlyrics.LyricSourcePlugin.viewlyrics.service \
 	$(NULL)
+.PHONY: $(service_DATA)
