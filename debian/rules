@@ -22,3 +22,10 @@ override_dh_auto_install:
 	echo -n > "${CURDIR}/py-compile"
 	dh_auto_install --buildsystem=autoconf
 	dh_auto_install --buildsystem=pybuild
+	for p in python python3; do\
+	    $(MAKE) -C data install-binSCRIPTS  PYTHON=/usr/bin/$$p DESTDIR=$(CURDIR)/debian/$$p-osdlyrics;\
+	    $(MAKE) -C data install-serviceDATA PYTHON=/usr/bin/$$p DESTDIR=$(CURDIR)/debian/$$p-osdlyrics;\
+	    for subdir in daemon lyricsources players tools; do\
+		$(MAKE) -C $$subdir install PYTHON=/usr/bin/$$p DESTDIR=$(CURDIR)/debian/$$p-osdlyrics;\
+	    done;\
+	done
