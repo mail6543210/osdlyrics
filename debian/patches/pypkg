@@ -1,0 +1,114 @@
+--- /dev/null
++++ b/setup.py
+@@ -0,0 +1,10 @@
++from distutils.core import setup
++
++import python
++
++setup(
++    name=python.PACKAGE_NAME,
++    version=python.PACKAGE_VERSION,
++    packages=['osdlyrics', 'osdlyrics.dbusext'],
++    package_dir={'osdlyrics': 'python'},
++)
+--- a/configure.ac
++++ b/configure.ac
+@@ -160,8 +160,6 @@
+         players/mpris2/Makefile
+         players/http/Makefile
+         players/mpd/Makefile
+-        python/Makefile
+-        python/dbusext/Makefile
+         lyricsources/Makefile
+         lyricsources/xiami/Makefile
+         lyricsources/lrc123/Makefile
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,4 +1,4 @@
+-SUBDIRS = src data po players daemon python lyricsources tools
++SUBDIRS = src data po players daemon lyricsources tools
+ ACLOCAL_AMFLAGS = -I m4
+ 
+ EXTRA_DIST = m4/ChangeLog
+--- a/python/Makefile.am
++++ /dev/null
+@@ -1,45 +0,0 @@
+-#
+-# Copyright (C) 2011  Tiger Soldier
+-#
+-# This file is part of OSD Lyrics.
+-#
+-# OSD Lyrics is free software: you can redistribute it and/or modify
+-# it under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 3 of the License, or
+-# (at your option) any later version.
+-#
+-# OSD Lyrics is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU General Public License for more details.
+-#
+-# You should have received a copy of the GNU General Public License
+-# along with OSD Lyrics.  If not, see <https://www.gnu.org/licenses/>.
+-#
+-
+-SUBDIRS = dbusext
+-
+-ol_PYTHON = \
+-	app.py \
+-	config.py \
+-	consts.py \
+-	pattern.py \
+-	lrc.py \
+-	utils.py \
+-	errors.py \
+-	player_proxy.py \
+-	timer.py \
+-	metadata.py \
+-	lyricsource.py \
+-	$(NULL)
+-
+-nodist_ol_PYTHON = \
+-	__init__.py \
+-	$(NULL)
+-
+-EXTRA_DIST = \
+-	__init__.py.in \
+-	$(NULL)
+-
+-oldir = @pkgpythondir@
+-
+--- a/python/dbusext/Makefile.am
++++ /dev/null
+@@ -1,31 +0,0 @@
+-# -*- coding: utf-8 -*-
+-#
+-# Copyright (C) 2011  Tiger Soldier
+-#
+-# This file is part of OSD Lyrics.
+-#
+-# OSD Lyrics is free software: you can redistribute it and/or modify
+-# it under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 3 of the License, or
+-# (at your option) any later version.
+-#
+-# OSD Lyrics is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU General Public License for more details.
+-#
+-# You should have received a copy of the GNU General Public License
+-# along with OSD Lyrics.  If not, see <https://www.gnu.org/licenses/>.
+-#
+-
+-ol_dbus_PYTHON = \
+-	__init__.py \
+-	service.py \
+-	property.py \
+-	$(NULL)
+-
+-ol_dbusdir = @pkgpythondir@/dbusext
+-
+-CLEANFILES = \
+-	*.pyc \
+-	$(NULL)
