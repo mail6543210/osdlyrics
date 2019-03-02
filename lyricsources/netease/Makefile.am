@@ -1,6 +1,6 @@
 netease_PYTHON = netease.py
 
-neteasedir = $(pkglibdir)/lyricsources/netease
+neteasedir = $(pkgdatadir)/lyricsources/netease
 
 
 servicedir = $(datarootdir)/dbus-1/services
@@ -12,7 +12,7 @@ EXTRA_DIST = \
 	$(NULL)
 
 $(service_DATA): $(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	org.osdlyrics.LyricSourcePlugin.netease.service \

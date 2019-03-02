@@ -2,7 +2,7 @@ mpd_PYTHON = \
         mpd_proxy.py \
         $(NULL)
 
-mpddir = $(pkglibdir)/players/mpd
+mpddir = $(pkgdatadir)/players/mpd
 
 
 servicedir = $(datarootdir)/dbus-1/services
@@ -14,7 +14,7 @@ EXTRA_DIST = \
         $(NULL)
 
 $(service_DATA): $(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
         org.osdlyrics.PlayerProxy.Mpd.service \

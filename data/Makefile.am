@@ -51,13 +51,13 @@ EXTRA_DIST = \
 	$(NULL)
 
 osdlyrics-daemon: osdlyrics-daemon.in
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 org.osdlyrics.Daemon.service: org.osdlyrics.Daemon.service.in
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 org.osdlyrics.Config.service: org.osdlyrics.Config.service.in
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	org.osdlyrics.Daemon.service \
