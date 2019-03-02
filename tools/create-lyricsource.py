@@ -31,7 +31,7 @@ ROOTMAKEFILEAM = r"""SUBDIRS = src
 
 MAKEFILEAM = r"""${name}_PYTHON = ${name}.py
 
-${name}dir = $$(pkglibdir)/lyricsources/${name}
+${name}dir = $$(pkgdatadir)/lyricsources/${name}
 
 
 servicedir = $$(datadir)/dbus-1/services
@@ -43,7 +43,7 @@ EXTRA_DIST = \
 	$$(NULL)
 
 $$(service_DATA): $$(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$$(pkglibdir)|" -e "s|\@PYTHON\@|$$(PYTHON)|" $$< > $$@
+	@sed -e "s|\@pkgdatadir\@|$$(pkgdatadir)|" -e "s|\@PYTHON\@|$$(PYTHON)|" $$< > $$@
 
 CLEANFILES = \
 	org.osdlyrics.LyricSourcePlugin.${name}.service \
@@ -52,7 +52,7 @@ CLEANFILES = \
 
 SERVICE = r"""[D-BUS Service]
 Name=org.osdlyrics.LyricSourcePlugin.${name}
-Exec=@PYTHON@ @pkglibdir@/lyricsources/${name}/${name}.py
+Exec=@PYTHON@ @pkgdatadir@/lyricsources/${name}/${name}.py
 """
 
 PYTHON = r"""# -*- coding: utf-8 -*-

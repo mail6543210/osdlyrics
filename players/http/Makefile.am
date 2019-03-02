@@ -5,7 +5,7 @@ http_PYTHON = \
 	error.py \
 	$(NULL)
 
-httpdir = $(pkglibdir)/players/http
+httpdir = $(pkgdatadir)/players/http
 
 
 servicedir = $(datadir)/dbus-1/services
@@ -17,7 +17,7 @@ EXTRA_DIST = \
 	$(NULL)
 
 $(service_DATA): $(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	org.osdlyrics.PlayerProxy.Http.service \

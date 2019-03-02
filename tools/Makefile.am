@@ -1,12 +1,12 @@
 bin_SCRIPTS = osdlyrics-create-lyricsource
 
-osdlyricstoolsdir = $(pkglibdir)/tools
+osdlyricstoolsdir = $(pkgdatadir)/tools
 osdlyricstools_PYTHON = \
 	create-lyricsource.py \
 	$(NULL)
 
 osdlyrics-create-lyricsource: osdlyrics-create-lyricsource.in
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	osdlyrics-create-lyricsource \

@@ -1,6 +1,6 @@
 mpris2_PYTHON = mpris2.py
 
-mpris2dir = $(pkglibdir)/players/mpris2
+mpris2dir = $(pkgdatadir)/players/mpris2
 
 
 servicedir = $(datadir)/dbus-1/services
@@ -12,7 +12,7 @@ EXTRA_DIST = \
 	$(NULL)
 
 $(service_DATA): $(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	org.osdlyrics.PlayerProxy.Mpris2.service \

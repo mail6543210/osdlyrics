@@ -1,6 +1,6 @@
 viewlyrics_PYTHON = viewlyrics.py
 
-viewlyricsdir = $(pkglibdir)/lyricsources/viewlyrics
+viewlyricsdir = $(pkgdatadir)/lyricsources/viewlyrics
 
 
 servicedir = $(datadir)/dbus-1/services
@@ -12,7 +12,7 @@ EXTRA_DIST = \
 	$(NULL)
 
 $(service_DATA): $(service_in_files)
-	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
+	@sed -e "s|\@pkgdatadir\@|$(pkgdatadir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
 CLEANFILES = \
 	org.osdlyrics.LyricSourcePlugin.viewlyrics.service \

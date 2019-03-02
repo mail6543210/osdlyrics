@@ -7,5 +7,5 @@ daemon_PYTHON = \
 	lyricsource.py \
 	$(NULL)
 
-daemondir = $(pkglibdir)/daemon
+daemondir = $(pkgdatadir)/daemon
 
