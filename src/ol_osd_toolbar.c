@@ -67,7 +67,7 @@ static void _status_changed_cb (OlPlayer *player,
                                 OlOsdToolbar *toolbar);
 static void ol_osd_toolbar_destroy (GtkObject *obj);
 
-const static struct ButtonSpec btn_spec[] = {
+static const struct ButtonSpec btn_spec[] = {
   {OL_STOCK_OSD_PLAY, _play_clicked},
   {OL_STOCK_OSD_PAUSE, _pause_clicked},
   {OL_STOCK_OSD_STOP, _stop_clicked},
