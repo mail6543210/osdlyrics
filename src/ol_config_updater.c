@@ -26,7 +26,7 @@ static void
 _update_default_values (void)
 {
   OlConfigProxy *config = ol_config_proxy_get_instance ();
-  int i;
+  unsigned int i;
   for (i = 0; i < G_N_ELEMENTS (config_bool); i++)
   {
     ol_config_proxy_set_bool_default (config,

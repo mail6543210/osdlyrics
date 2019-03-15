@@ -447,7 +447,7 @@ ol_osd_module_update_next_lyric (OlOsdModule *osd, OlLrcIter *iter)
 static void
 _bind_all_config (OlOsdModule *osd)
 {
-  int i;
+  unsigned int i;
   for (i = 0; i < G_N_ELEMENTS (_config_mapping); i++)
   {
     struct _ConfigBinding *binding = _bind_config (_config_mapping[i].key,

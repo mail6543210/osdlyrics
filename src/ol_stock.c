@@ -40,7 +40,7 @@ ol_stock_init ()
   if (icon_factory == NULL)
   {
     icon_factory = gtk_icon_factory_new ();
-    int i;
+    unsigned int i;
     for (i = 0; i < G_N_ELEMENTS (ICON_LIST); i++)
     {
       GtkIconSet *icon_set = gtk_icon_set_new ();

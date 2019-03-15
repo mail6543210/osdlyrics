@@ -759,7 +759,7 @@ load_osd ()
 static void
 init_signals ()
 {
-  int i;
+  unsigned int i;
   /* Connect RadioButton signals for string options */
   for (i = 0; i < G_N_ELEMENTS (radio_str_options); i++)
   {
@@ -866,7 +866,7 @@ init_signals ()
 static void
 init_toggle_properties ()
 {
-  int i;
+  unsigned int i;
   for (i = 0; i < G_N_ELEMENTS (toggle_properties); i++)
   {
     toggle_set_property (NULL, &toggle_properties[i]);
@@ -1013,7 +1013,7 @@ combo_str_changed (GtkComboBox *widget,
 static void
 load_check_button_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1046,7 +1046,7 @@ save_check_button_option (struct CheckButtonOptions* opt)
 static void
 load_radio_str_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1076,7 +1076,7 @@ load_radio_str_options ()
 static void
 load_entry_str_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1098,7 +1098,7 @@ load_entry_str_options ()
 static void
 load_spin_int_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1117,7 +1117,7 @@ load_spin_int_options ()
 static void
 load_scale_double_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1136,7 +1136,7 @@ load_scale_double_options ()
 static void
 load_color_str_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1160,7 +1160,7 @@ load_color_str_options ()
 static void
 load_font_str_options ()
 {
-  int i = 0;
+  unsigned int i = 0;
   OlConfigProxy *config = ol_config_proxy_get_instance ();
   if (config == NULL)
     return;
@@ -1182,7 +1182,7 @@ load_font_str_options ()
 static void
 load_combo_str_options ()
 {
-  int i;
+  unsigned int i;
   int index;
   const char **combo_value;
   GtkComboBox *combo;

@@ -399,7 +399,7 @@ ol_player_mpris2_proxy_properties_changed (GDBusProxy *proxy,
     }
     else
     {
-      gint i;
+      unsigned int i;
       for (i = 0; i < G_N_ELEMENTS (CAPS_NAME_MAP); i++)
       {
         if (g_str_equal (key, CAPS_NAME_MAP[i].name))

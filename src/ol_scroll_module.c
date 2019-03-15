@@ -367,7 +367,7 @@ _toolbar_new (OlScrollModule *module)
 static void
 _bind_all_config (OlScrollModule *module)
 {
-  int i;
+  unsigned int i;
   for (i = 0; i < G_N_ELEMENTS (_config_mapping); i++)
   {
     struct _ConfigBinding *binding = _bind_config (_config_mapping[i].key,

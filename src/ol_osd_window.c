@@ -326,7 +326,7 @@ ol_osd_window_screen_composited_changed (GdkScreen *screen, gpointer userdata)
   if (priv->blur_radius > 0)
   {
     ol_osd_window_update_render_blur_radius (osd);
-    int i;
+    unsigned int i;
     for (i = 0; i < osd->line_count; i++)
       ol_osd_window_update_lyric_surface (osd, i);
   }
@@ -762,7 +762,7 @@ ol_osd_window_mouse_timer (gpointer data)
     gint rel_x, rel_y;
     gboolean mouse_over = FALSE;
     gdk_window_get_pointer (widget->window, &rel_x, &rel_y, NULL);
-    int i;
+    unsigned int i;
     for (i = 0; i < osd->line_count; i++)
     {
       if (_point_in_rect (rel_x, rel_y, &osd->lyric_rects[i]))
@@ -1844,7 +1844,7 @@ ol_osd_window_set_font_name (OlOsdWindow *osd,
     return;
   ol_osd_render_set_font_name (osd->render_context,
                                font_name);
-  int i;
+  unsigned int i;
   for (i = 0; i < osd->line_count; i++)
     ol_osd_window_update_lyric_surface (osd, i);
   ol_osd_window_queue_resize (osd);
@@ -1867,7 +1867,7 @@ ol_osd_window_set_outline_width (OlOsdWindow *osd,
   ol_assert (osd != NULL);
   ol_assert (osd->render_context != NULL);
   ol_osd_render_set_outline_width (osd->render_context, width);
-  int i;
+  unsigned int i;
   for (i = 0; i < osd->line_count; i++)
     ol_osd_window_update_lyric_surface (osd, i);
   ol_osd_window_queue_resize (osd);
@@ -1894,7 +1894,7 @@ ol_osd_window_set_active_colors (OlOsdWindow *osd,
   osd->active_colors[0] = top_color;
   osd->active_colors[1] = middle_color;
   osd->active_colors[2] = bottom_color;
-  int i;
+  unsigned int i;
   for (i = 0; i < osd->line_count; i++)
     ol_osd_window_update_lyric_surface (osd, i);
   gtk_widget_queue_draw (GTK_WIDGET (osd));
@@ -1910,7 +1910,7 @@ ol_osd_window_set_inactive_colors (OlOsdWindow *osd,
   osd->inactive_colors[0] = top_color;
   osd->inactive_colors[1] = middle_color;
   osd->inactive_colors[2] = bottom_color;
-  int i;
+  unsigned int i;
   for (i = 0; i < osd->line_count; i++)
     ol_osd_window_update_lyric_surface (osd, i);
   gtk_widget_queue_draw (GTK_WIDGET (osd));
@@ -2039,7 +2039,7 @@ ol_osd_window_set_blur_radius (OlOsdWindow *osd, double radius)
 {
   ol_assert (OL_IS_OSD_WINDOW (osd));
   OlOsdWindowPrivate *priv = OL_OSD_WINDOW_GET_PRIVATE (osd);
-  int i;
+  unsigned int i;
   priv->blur_radius = radius;
   ol_osd_window_update_render_blur_radius (osd);
   for (i = 0; i < osd->line_count; i++)

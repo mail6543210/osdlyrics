@@ -30,7 +30,7 @@
     OlAppChooserWidgetPrivate))
 
 static const char *DEFAULT_ICON_NAME = "media-playback-start";
-static const int DEFAULT_N_COLUMN = 4;
+static const unsigned int DEFAULT_N_COLUMN = 4;
 static const int IMAGE_SIZE = 64;
 static const int LABLE_WIDTH = 80;
 

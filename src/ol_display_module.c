@@ -71,7 +71,7 @@ static struct OlDisplayClass*
 _get_class (const char *name)
 {
   ol_assert_ret (name != NULL, NULL);
-  int i;
+  unsigned int i;
   for (i = 0; i < classes->len; i++)
   {
     struct OlDisplayClass *klass = (struct OlDisplayClass *)(g_ptr_array_index (classes, i));
