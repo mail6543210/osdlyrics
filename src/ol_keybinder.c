@@ -44,8 +44,8 @@ typedef struct _Binding {
   OlBindkeyHandler  handler;
   gpointer              user_data;
   char                 *keystring;
-  uint                  keycode;
-  uint                  modifiers;
+  int                   keycode;
+  unsigned int          modifiers;
 } Binding;
 
 static GSList *bindings = NULL;
