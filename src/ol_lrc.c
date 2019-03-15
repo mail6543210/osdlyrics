@@ -70,7 +70,7 @@ static struct OlLrcItem *ol_lrc_iter_get_item (OlLrcIter *iter);
 /* ---------------Save offset functions ----------------- */
 static gboolean _save_offset_timeout (OlLrc *lrc);
 
-G_DEFINE_TYPE (OlLrc, ol_lrc, G_TYPE_OBJECT);
+G_DEFINE_TYPE (OlLrc, ol_lrc, G_TYPE_OBJECT)
 
 static void
 ol_lrc_class_init (OlLrcClass *klass)
@@ -94,7 +94,7 @@ ol_lrc_init (OlLrc *lrc)
                                           (GDestroyNotify) g_free);
   priv->save_offset_timer = 0;
   priv->offset = 0;
-};
+}
 
 OlLrc *
 ol_lrc_new (OlLyrics *lyric_proxy,

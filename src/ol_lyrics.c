@@ -27,7 +27,7 @@ static void ol_lyrics_g_signal (GDBusProxy *proxy,
 static OlLrc *ol_lyrics_get_lrc_from_variant (OlLyrics *proxy,
                                               GVariant *variant);
 
-G_DEFINE_TYPE (OlLyrics, ol_lyrics, G_TYPE_DBUS_PROXY);
+G_DEFINE_TYPE (OlLyrics, ol_lyrics, G_TYPE_DBUS_PROXY)
 
 static void
 ol_lyrics_init (OlLyrics *proxy)

@@ -60,7 +60,7 @@ static void ol_app_chooser_widget_destroy (GtkObject *object);
 
 G_DEFINE_TYPE (OlAppChooserWidget,
                ol_app_chooser_widget,
-               GTK_TYPE_TABLE);
+               GTK_TYPE_TABLE)
 
 static void
 ol_app_chooser_widget_class_init (OlAppChooserWidgetClass *klass)

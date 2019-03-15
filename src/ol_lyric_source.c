@@ -25,17 +25,17 @@
 #include "ol_marshal.h"
 #include "ol_debug.h"
 
-G_DEFINE_TYPE (OlLyricSource, ol_lyric_source, G_TYPE_DBUS_PROXY);
-G_DEFINE_TYPE (OlLyricSourceTask, ol_lyric_source_task, G_TYPE_OBJECT);
+G_DEFINE_TYPE (OlLyricSource, ol_lyric_source, G_TYPE_DBUS_PROXY)
+G_DEFINE_TYPE (OlLyricSourceTask, ol_lyric_source_task, G_TYPE_OBJECT)
 G_DEFINE_TYPE (OlLyricSourceSearchTask,
                ol_lyric_source_search_task,
-               OL_TYPE_LYRIC_SOURCE_TASK);
+               OL_TYPE_LYRIC_SOURCE_TASK)
 G_DEFINE_TYPE (OlLyricSourceDownloadTask,
                ol_lyric_source_download_task,
-               OL_TYPE_LYRIC_SOURCE_TASK);
+               OL_TYPE_LYRIC_SOURCE_TASK)
 G_DEFINE_TYPE (OlLyricSourceCandidate,
                ol_lyric_source_candidate,
-               G_TYPE_OBJECT);
+               G_TYPE_OBJECT)
 
 #define OL_LYRIC_SOURCE_GET_PRIVATE(obj)                                \
   (G_TYPE_INSTANCE_GET_PRIVATE                                          \

@@ -37,7 +37,7 @@ struct _OlImageButtonPriv
   GdkPixbuf *image;
 };
 
-G_DEFINE_TYPE (OlImageButton, ol_image_button, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (OlImageButton, ol_image_button, GTK_TYPE_BUTTON)
 
 static void ol_image_button_destroy (GtkObject *object);
 static void ol_image_button_size_request (GtkWidget *widget,

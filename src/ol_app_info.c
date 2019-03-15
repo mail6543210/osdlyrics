@@ -96,7 +96,7 @@ static gboolean _app_info_do_delete (GAppInfo *appinfo);
 
 G_DEFINE_TYPE_WITH_CODE (OlAppInfo, ol_app_info, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (G_TYPE_APP_INFO,
-                                                ol_app_info_iface_init));
+                                                ol_app_info_iface_init))
 
 static void
 ol_app_info_class_init (OlAppInfoClass *klass)

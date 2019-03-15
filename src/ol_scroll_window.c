@@ -126,7 +126,7 @@ static void ol_scroll_window_seek (OlScrollWindow *scroll,
 static void ol_scroll_window_end_seek (OlScrollWindow *scroll);
 static void ol_scroll_window_update_tooltip (OlScrollWindow *scroll);
 
-G_DEFINE_TYPE (OlScrollWindow, ol_scroll_window, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (OlScrollWindow, ol_scroll_window, GTK_TYPE_WINDOW)
 
 
 GtkWidget*
