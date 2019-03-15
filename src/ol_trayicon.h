@@ -20,7 +20,7 @@
 #ifndef __OL_TRAYICON_H__
 #define __OL_TRAYICON_H__
 
-enum OlPlayerStatus;
+#include "ol_player.h"
 
 /** 
  * @brief give a Entrance to do trayicon job
