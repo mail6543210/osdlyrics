@@ -5,6 +5,10 @@ osdlyricstools_PYTHON = \
 	create-lyricsource.py \
 	$(NULL)
 
+EXTRA_DIST = \
+	osdlyrics-create-lyricsource.in \
+	$(NULL)
+
 osdlyrics-create-lyricsource: osdlyrics-create-lyricsource.in
 	@sed -e "s|\@pkglibdir\@|$(pkglibdir)|" -e "s|\@PYTHON\@|$(PYTHON)|" $< > $@
 
