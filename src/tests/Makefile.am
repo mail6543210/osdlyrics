@@ -14,7 +14,6 @@ check_PROGRAMS = \
 	$(NULL)
 
 AM_CPPFLAGS = \
-	-DDATADIR='"$(datadir)"' \
 	-DICONDIR='"$(OL_ICONDIR)"' \
 	-DGUIDIR='"$(OL_GUIDIR)"' \
 	@GTK2_CFLAGS@ \

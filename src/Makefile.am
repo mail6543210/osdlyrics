@@ -9,7 +9,6 @@ AM_CPPFLAGS = \
 	@NOTIFY_CFLAGS@ \
 	@X11_CFLAGS@ \
 	@APP_INDICATOR_CFLAGS@ \
-	-DDATADIR='"$(datadir)"' \
 	-DICONDIR='"$(OL_ICONDIR)"' \
 	-DGUIDIR='"$(OL_GUIDIR)"'
 LDADD = \
