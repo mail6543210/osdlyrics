@@ -24,7 +24,6 @@ AC_CHECK_HEADERS([fcntl.h libintl.h limits.h locale.h stddef.h stdlib.h string.h
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_MAKE_SET
-AM_PROG_CC_C_O
 AC_PROG_RANLIB
 AM_PATH_PYTHON([2.6])
 
