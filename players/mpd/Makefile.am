@@ -5,7 +5,7 @@ mpd_PYTHON = \
 mpddir = $(pkglibdir)/players/mpd
 
 
-servicedir = $(datadir)/dbus-1/services
+servicedir = $(datarootdir)/dbus-1/services
 service_in_files = org.osdlyrics.PlayerProxy.Mpd.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 

@@ -130,5 +130,5 @@ osdlyrics_SOURCES = \
 
 SUBDIRS = tests
 
-localedir = $(datadir)/locale
+localedir = $(datarootdir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

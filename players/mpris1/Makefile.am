@@ -3,7 +3,7 @@ mpris1_PYTHON = mpris1.py
 mpris1dir = $(pkglibdir)/players/mpris1
 
 
-servicedir = $(datadir)/dbus-1/services
+servicedir = $(datarootdir)/dbus-1/services
 service_in_files = org.osdlyrics.PlayerProxy.Mpris1.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 

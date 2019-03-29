@@ -3,7 +3,7 @@ viewlyrics_PYTHON = viewlyrics.py
 viewlyricsdir = $(pkglibdir)/lyricsources/viewlyrics
 
 
-servicedir = $(datadir)/dbus-1/services
+servicedir = $(datarootdir)/dbus-1/services
 service_in_files = org.osdlyrics.LyricSourcePlugin.viewlyrics.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 
